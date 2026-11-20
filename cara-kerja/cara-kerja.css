@@ -1966,9 +1966,6 @@
 }
 
 @media (max-width: 600px) {
-  body.panduan {
-    padding-bottom: 108px;
-  }
   .hero-monograf {
     padding-top: 96px;
   }

@@ -109,6 +109,19 @@ export function pasangShell() {
   document.querySelectorAll('.tema button').forEach(b => b.onclick = () => { pasangTema(b.dataset.tema); simpanTema(b.dataset.tema); });
   const kepala = document.querySelector('.kepala'), cek = () => kepala.classList.toggle('bergulir', scrollY > 4);
   addEventListener('scroll', cek, { passive: true }); cek();
+  // Cegah pinch-zoom di Safari iOS dan Ctrl/Cmd+scroll/keyboard zoom.
+  addEventListener('gesturestart', e => e.preventDefault());
+  addEventListener('wheel', e => { if (e.ctrlKey) e.preventDefault(); }, { passive: false });
+  addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && ['+', '-', '=', '0'].includes(e.key)) e.preventDefault(); });
+  // Di ponsel, sembunyikan menu melayang bawah saat kaki halaman masuk layar (kaki sudah memuat navigasi).
+  const menuBawah = document.querySelector('.menu-bawah'), kaki = document.querySelector('.kaki');
+  if (menuBawah && kaki) {
+    new IntersectionObserver(([e]) => {
+      const sembunyi = e.isIntersecting;
+      menuBawah.classList.toggle('sembunyi', sembunyi);
+      menuBawah.inert = sembunyi;
+    }, { rootMargin: '0px 0px -12px 0px', threshold: 0 }).observe(kaki);
+  }
 }
 
 // Utilitas kecil yang dipakai halaman aplikasi.
