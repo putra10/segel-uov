@@ -59,13 +59,16 @@ export function pasangShell() {
         <div><h4>Proyek</h4><span class="judul-proyek">Autentikasi Suatu Tanda Tangan Digital</span><span>Pemodelan Matematika · Kelompok 3B</span><span>Dosen fasilitator: Muhammad Imran, Ph.D.</span><span>Departemen Matematika FMIPA UI</span><span>2026</span></div>
       </div>
     </div></footer>`);
-  // Tekstur lak dipasang di akar supaya blok merah mana pun bisa memakainya.
-  document.documentElement.style.setProperty('--tekstur', `url(${teksturLak()})`);
-  // Halaman selain beranda memakai latar guilloché, bukan tekstur lak penuh.
-  if (!document.body.classList.contains('beranda')) {
-    const p = location.pathname, varian = p.includes('/verifikasi') ? 'spirograf' : p.includes('/cara-kerja') ? 'lissajous' : p.includes('/about') ? 'mawar' : 'roset';
-    document.documentElement.style.setProperty('--guilloche', `url("${guilloche(varian)}")`);
-  }
+  // Tekstur lak dan guilloché dipasang setelah bingkai pertama agar perpindahan halaman langsung tampil.
+  const beranda = document.body.classList.contains('beranda');
+  const perluTekstur = beranda || document.body.classList.contains('panduan') || !!document.querySelector('.hasil');
+  requestAnimationFrame(() => {
+    if (perluTekstur) teksturLak().then(u => document.documentElement.style.setProperty('--tekstur', `url("${u}")`));
+    if (!beranda) {
+      const p = location.pathname, varian = p.includes('/verifikasi') ? 'spirograf' : p.includes('/cara-kerja') ? 'lissajous' : p.includes('/about') ? 'mawar' : 'roset';
+      document.documentElement.style.setProperty('--guilloche', `url("${guilloche(varian)}")`);
+    }
+  });
 
   // Lewati ke konten.
   const utama = document.querySelector('main');

@@ -440,6 +440,7 @@ body:not(.beranda) .hero-latar {
   .hero-isi { padding-top: 120px; }
   .kanvas-ket { text-align: left; }
   .kartu-bukti { display: none; }
+  .coba-baris { backdrop-filter: none; background: oklch(98% 0.02 60 / .13); }
 }
 @media (max-width: 640px) {
   .hero-angka div { padding: 0 16px; } .hero-angka dt { font-size: 20px; }

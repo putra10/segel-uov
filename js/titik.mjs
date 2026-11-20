@@ -18,7 +18,7 @@ export function guilloche(varian = 'roset') {
     const R = 320, r = 120;
     for (let k = 0; k < 12; k++) {
       const dd = 70 + k * 12, putar = k * 0.05;
-      kurva(1440, u => {
+      kurva(360, u => {
         const t = u * Math.PI * 6, x = (R - r) * Math.cos(t) + dd * Math.cos(((R - r) / r) * t), y = (R - r) * Math.sin(t) - dd * Math.sin(((R - r) / r) * t);
         return [cx + x * Math.cos(putar) - y * Math.sin(putar), cy + x * Math.sin(putar) + y * Math.cos(putar)];
       }, true);
@@ -26,37 +26,44 @@ export function guilloche(varian = 'roset') {
   } else if (varian === 'mawar') {
     for (let k = 0; k < 18; k++) {
       const R = 420 - k * 9, putar = k * 0.035;
-      kurva(720, u => { const th = u * Math.PI, r = R * Math.cos(5 * th); return [cx + r * Math.cos(th + putar), cy + r * Math.sin(th + putar)]; }, true);
+      kurva(240, u => { const th = u * Math.PI, r = R * Math.cos(5 * th); return [cx + r * Math.cos(th + putar), cy + r * Math.sin(th + putar)]; }, true);
     }
   } else if (varian === 'lissajous') {
     for (let k = 0; k < 16; k++) {
       const delta = k * 0.09, A = 430 - k * 6, B = 330 - k * 5;
-      kurva(720, u => { const t = u * Math.PI * 2; return [cx + A * Math.sin(3 * t + delta), cy + B * Math.sin(2 * t)]; }, true);
+      kurva(180, u => { const t = u * Math.PI * 2; return [cx + A * Math.sin(3 * t + delta), cy + B * Math.sin(2 * t)]; }, true);
     }
   } else {
     for (let k = 0; k < 26; k++) {
       const R = 130 + k * 11, a = 14 + (k % 3) * 4, fase = k * 0.42;
-      kurva(360, u => { const th = u * Math.PI * 2, rr = R + a * Math.sin(24 * th + fase); return [cx + rr * Math.cos(th), cy + rr * Math.sin(th)]; }, true);
+      kurva(240, u => { const th = u * Math.PI * 2, rr = R + a * Math.sin(24 * th + fase); return [cx + rr * Math.cos(th), cy + rr * Math.sin(th)]; }, true);
     }
     for (const arah of [1, -1]) for (let k = 0; k < 9; k++)
-      kurva(200, u => { const x = u * W; return [x, 880 + k * 7 + arah * 26 * Math.sin(x / 70 + k * 0.5)]; });
+      kurva(80, u => { const x = u * W; return [x, 880 + k * 7 + arah * 26 * Math.sin(x / 70 + k * 0.5)]; });
   }
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid slice"><g fill="none" stroke="#f6e7d2" stroke-opacity="${varian === 'spirograf' ? '.09' : '.13'}" stroke-width=".9">${jalur.map(d => `<path d="${d}"/>`).join('')}</g></svg>`;
+  if (typeof Blob !== 'undefined' && typeof URL !== 'undefined' && URL.createObjectURL) {
+    return URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }));
+  }
   return 'data:image/svg+xml,' + encodeURIComponent(svg);
 }
 
-export function teksturLak(ukuran = 512) {
+export function teksturLak(ukuran = 256) {
   const k = document.createElement('canvas'); k.width = k.height = ukuran;
-  const c = k.getContext('2d');
-  c.filter = 'blur(4px)';
-  for (let i = 0; i < 150; i++) {
-    const x = Math.random() * ukuran, w = 1 + Math.random() * 16, a = 0.03 + Math.random() * 0.1, y = Math.random() * ukuran;
+  // willReadFrequently menjaga kanvas di RAM CPU sehingga tidak memicu GPU readback stall di ponsel.
+  const c = k.getContext('2d', { willReadFrequently: true });
+  for (let i = 0; i < 90; i++) {
+    const x = Math.random() * ukuran, w = 1 + Math.random() * 8, a = 0.03 + Math.random() * 0.09, y = Math.random() * ukuran;
     const g = c.createLinearGradient(0, y - ukuran, 0, y + ukuran);
     g.addColorStop(0, 'rgba(25,0,0,0)'); g.addColorStop(0.5, `rgba(25,0,0,${a})`); g.addColorStop(1, 'rgba(25,0,0,0)');
     c.fillStyle = g;
-    for (const dx of [-ukuran, 0, ukuran]) c.fillRect(x + dx, 0, w, ukuran); // sambung mulus kiri-kanan
+    for (const dx of [-ukuran, 0, ukuran]) {
+      // Lapisan lembut meniru blur(4px) tanpa filter GPU yang memperlambat render awal.
+      c.globalAlpha = 0.35; c.fillRect(x + dx - 3, 0, w + 6, ukuran);
+      c.globalAlpha = 0.65; c.fillRect(x + dx - 1, 0, w + 2, ukuran);
+      c.globalAlpha = 1; c.fillRect(x + dx, 0, w, ukuran);
+    }
   }
-  c.filter = 'none';
   const img = c.getImageData(0, 0, ukuran, ukuran), d = img.data;
   for (let i = 0; i < d.length; i += 4) {
     const n = Math.random();
@@ -64,7 +71,10 @@ export function teksturLak(ukuran = 512) {
     else if (n < 0.1) d[i + 3] = Math.max(d[i + 3], 30);
   }
   c.putImageData(img, 0, 0);
-  return k.toDataURL('image/png');
+  return new Promise(resolve => {
+    if (k.toBlob) k.toBlob(b => resolve(b ? URL.createObjectURL(b) : k.toDataURL('image/png')), 'image/png');
+    else resolve(k.toDataURL('image/png'));
+  });
 }
 
 // Cap segel dari ~2000 titik di kanvas. Ukuran tiap titik = satu elemen GF(16) dari σ (0..15),
@@ -73,9 +83,10 @@ export function teksturLak(ukuran = 512) {
 export function segelTitik(kanvas) {
   const ctx = kanvas.getContext('2d');
   const diam = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const S = 8.5; // jarak grid titik, px
+  let S = 8.5; // jarak grid titik, px (sedikit lebih renggang di layar sempit)
   let W = 0, H = 0, R = 0, cx = 0, cy = 0, titik = [], nilai = new Uint8Array(160), kondisi = 'proses';
-  let tetikus = { x: -1e4, y: -1e4 }, jalan = false, terlihat = true, t0 = performance.now();
+  let tetikus = { x: -1e4, y: -1e4 }, terlihat = true, raf = 0, t0 = performance.now();
+  let cahayaUtuh = null, cahayaRetak = null;
 
   const garis = (pts) => pts.map(([x, y]) => [cx + x * R, cy + y * R]);
   function jarak(px, py, pts) {
@@ -108,61 +119,75 @@ export function segelTitik(kanvas) {
   function ukur() {
     const kotak = kanvas.getBoundingClientRect(), dpr = Math.min(devicePixelRatio || 1, 2);
     W = kotak.width; H = kotak.height;
+    S = W < 460 ? 10 : 8.5;
     kanvas.width = Math.round(W * dpr); kanvas.height = Math.round(H * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     R = Math.min(W, H) * 0.4; cx = W / 2; cy = H / 2;
+    cahayaUtuh = ctx.createRadialGradient(cx, cy, R * 0.1, cx, cy, R * 1.5);
+    cahayaUtuh.addColorStop(0, 'rgba(255,214,190,0.13)'); cahayaUtuh.addColorStop(1, 'rgba(255,214,190,0)');
+    cahayaRetak = ctx.createRadialGradient(cx, cy, R * 0.1, cx, cy, R * 1.5);
+    cahayaRetak.addColorStop(0, 'rgba(255,220,200,0.05)'); cahayaRetak.addColorStop(1, 'rgba(255,214,190,0)');
     bangun();
   }
 
   function tebar() { for (const p of titik) { const a = Math.random() * 6.283, d = R * (1.2 + Math.random() * 1.6); p.x = cx + Math.cos(a) * d; p.y = cy + Math.sin(a) * d; p.a = 0; } }
 
+  function mulai() { if (!raf && terlihat && !document.hidden) { gambar.lalu = undefined; raf = requestAnimationFrame(gambar); } }
+  function hentikan() { if (raf) { cancelAnimationFrame(raf); raf = 0; } }
+
   function gambar(now) {
-    if (!jalan) return;
-    if (terlihat) {
-      // Laju berbasis waktu: kalau bingkai jarang (laptop lambat, tab di latar), titik tetap sampai di tempatnya.
-      const t = (now - t0) / 1000, dt = Math.min(1, (now - (gambar.lalu ?? now)) / 1000) || 1 / 60;
-      gambar.lalu = now;
-      const laju = diam ? 1 : 1 - Math.pow(0.88, dt * 60);
-      ctx.clearRect(0, 0, W, H);
-      const cahaya = ctx.createRadialGradient(cx, cy, R * 0.1, cx, cy, R * 1.5);
-      cahaya.addColorStop(0, kondisi === 'retak' ? 'rgba(255,220,200,0.05)' : 'rgba(255,214,190,0.13)');
-      cahaya.addColorStop(1, 'rgba(255,214,190,0)');
-      ctx.fillStyle = cahaya; ctx.fillRect(0, 0, W, H);
-      ctx.fillStyle = kondisi === 'retak' ? '#c9b3a8' : '#f6e7d6';
-      for (const p of titik) {
-        const v = nilai[p.k % 160] / 15;
-        let tx = p.hx, ty = p.hy, ta, tr;
-        if (kondisi === 'proses') { ta = 0.16 + 0.1 * Math.sin(t * 3 + p.fase); tr = 1.3; }
-        else if (kondisi === 'redup') { ta = 0.24; tr = 1.7; } // menunggu dokumen: bayangan cap
-        else if (kondisi === 'retak') {
-          const g = R * 0.055;
-          tx += p.sisi > 0 ? g : -g * 0.8; ty += p.sisi > 0 ? g * 0.45 : -g * 0.6;
-          ta = p.celah ? 0 : 0.28 + v * 0.3; tr = 0.7 + v * S * 0.3;
-        } else { ta = 0.45 + v * 0.55 - Math.max(0, p.rel - 0.9) * 2; tr = 0.7 + v * S * 0.36; }
+    raf = 0;
+    if (!terlihat || document.hidden) return;
+    // Laju berbasis waktu: kalau bingkai jarang (laptop lambat, tab di latar), titik tetap sampai di tempatnya.
+    const t = (now - t0) / 1000, dt = Math.min(1, (now - (gambar.lalu ?? now)) / 1000) || 1 / 60;
+    gambar.lalu = now;
+    const laju = diam ? 1 : 1 - Math.pow(0.88, dt * 60);
+    const adaTetikus = tetikus.x > -1e3;
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = kondisi === 'retak' ? cahayaRetak : cahayaUtuh;
+    ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = kondisi === 'retak' ? '#c9b3a8' : '#f6e7d6';
+    for (const p of titik) {
+      const v = nilai[p.k % 160] / 15;
+      let tx = p.hx, ty = p.hy, ta, tr;
+      if (kondisi === 'proses') { ta = 0.16 + 0.1 * Math.sin(t * 3 + p.fase); tr = 1.3; }
+      else if (kondisi === 'redup') { ta = 0.24; tr = 1.7; } // menunggu dokumen: bayangan cap
+      else if (kondisi === 'retak') {
+        const g = R * 0.055;
+        tx += p.sisi > 0 ? g : -g * 0.8; ty += p.sisi > 0 ? g * 0.45 : -g * 0.6;
+        ta = p.celah ? 0 : 0.28 + v * 0.3; tr = 0.7 + v * S * 0.3;
+      } else { ta = 0.45 + v * 0.55 - Math.max(0, p.rel - 0.9) * 2; tr = 0.7 + v * S * 0.36; }
+      if (adaTetikus) {
         const mx = p.x - tetikus.x, my = p.y - tetikus.y, md = Math.hypot(mx, my);
         if (md < 80 && md > 0.01) { const dorong = (80 - md) * 0.35; tx += mx / md * dorong; ty += my / md * dorong; }
-        p.x += (tx - p.x) * laju; p.y += (ty - p.y) * laju; p.a += (ta - p.a) * laju; p.r += (tr - p.r) * laju;
-        if (p.a < 0.01 || p.r < 0.2) continue;
-        ctx.globalAlpha = Math.min(1, p.a * (0.9 + 0.1 * Math.sin(t * 1.4 + p.fase)));
-        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill();
       }
-      ctx.globalAlpha = 1;
+      p.x += (tx - p.x) * laju; p.y += (ty - p.y) * laju; p.a += (ta - p.a) * laju; p.r += (tr - p.r) * laju;
+      if (p.a < 0.01 || p.r < 0.2) continue;
+      ctx.globalAlpha = Math.min(1, p.a * (0.9 + 0.1 * Math.sin(t * 1.4 + p.fase)));
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill();
     }
-    requestAnimationFrame(gambar);
+    ctx.globalAlpha = 1;
+    raf = requestAnimationFrame(gambar);
   }
 
   new ResizeObserver(ukur).observe(kanvas);
-  new IntersectionObserver(([e]) => { terlihat = e.isIntersecting; }).observe(kanvas);
+  new IntersectionObserver(([e]) => { terlihat = e.isIntersecting; if (terlihat) mulai(); else hentikan(); }).observe(kanvas);
+  document.addEventListener('visibilitychange', () => { if (document.hidden) hentikan(); else mulai(); });
   const wadah = kanvas.parentElement;
-  wadah.addEventListener('pointermove', e => { const k = kanvas.getBoundingClientRect(); tetikus = { x: e.clientX - k.left, y: e.clientY - k.top }; });
+  wadah.addEventListener('pointermove', e => {
+    if (e.pointerType !== 'mouse') return;
+    const k = kanvas.getBoundingClientRect();
+    tetikus = { x: e.clientX - k.left, y: e.clientY - k.top };
+  });
   wadah.addEventListener('pointerleave', () => { tetikus = { x: -1e4, y: -1e4 }; });
-  ukur(); jalan = true; requestAnimationFrame(gambar);
+  ukur(); mulai();
 
   return {
     atur(sig, k) {
       if (sig) for (let i = 0; i < 160; i++) nilai[i] = (sig[i >> 1] >> ((i & 1) * 4)) & 15;
       if (k === 'utuh' && sig && !diam) tebar();
       kondisi = k;
+      mulai();
     },
   };
 }
