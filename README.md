@@ -62,6 +62,8 @@ flowchart TD
     P --> Q["Opsional: masukkan sidik jari kunci dari<br/>penanda tangan lewat saluran tepercaya"]
 ```
 
+Kalau bagan di atas tidak tampil, buka versi gambarnya: [docs/alur.png](docs/alur.png).
+
 Catatan untuk jalur QR: QR hanya muat sekitar 3 KB, sedangkan kunci publik UOV 412 KB. Karena itu QR berisi ID arsip (dan σ). Kunci publiknya diambil dari arsip. Kalau arsip tidak bisa dihubungi, penerima bisa memuat file kunci publik lewat Opsi lanjutan.
 
 ## Arsitektur kode
@@ -69,49 +71,48 @@ Catatan untuk jalur QR: QR hanya muat sekitar 3 KB, sedangkan kunci publik UOV 4
 Situsnya statis: HTML, CSS, dan modul JavaScript tanpa proses build. Semua perhitungan UOV berjalan di perangkat pengguna. Satu-satunya layanan luar adalah arsip di Supabase, dan arsip itu hanya menyimpan bukti dan kunci publik, bukan dokumen.
 
 ```mermaid
-flowchart LR
+flowchart TD
     subgraph Halaman
-        H1["index.html<br/>Beranda"]
-        H2["tandatangani/<br/>Sign"]
-        H3["verifikasi/<br/>Verify"]
-        H4["cara-kerja/<br/>Cara kerja"]
-        H5["about/<br/>About Us"]
+        direction LR
+        H1["Beranda<br/>index.html"]
+        H2["Sign<br/>tandatangani/"]
+        H3["Verify<br/>verifikasi/"]
+        H4["Cara kerja<br/>cara-kerja/"]
+        H5["About Us<br/>about/"]
     end
 
-    subgraph Modul["js/"]
-        SH["shell.mjs<br/>kepala, kaki, tema"]
-        TI["titik.mjs<br/>cap titik, latar"]
-        KE["kerja.mjs<br/>Web Worker"]
-        PR["protocol.mjs<br/>manifest, cek, token QR"]
-        UV["uov.mjs<br/>UOV atas GF(16)"]
-        DX["docx.mjs<br/>bukti di DOCX"]
+    SH["shell.mjs + titik.mjs<br/>kepala, kaki, menu, tema, latar"]
+    KE["kerja.mjs<br/>Web Worker"]
+    TY["uov-toy.mjs<br/>UOV kecil di F7"]
+    AR["arsip.mjs<br/>klien arsip"]
+    UV["uov.mjs<br/>UOV atas GF(16):<br/>generateKeyPair, sign, verify"]
+
+    subgraph Bukti["Lapisan bukti"]
+        DX["docx.mjs<br/>bukti + QR di DOCX"]
         PD["pdf.mjs<br/>bukti di PDF"]
-        AR["arsip.mjs<br/>klien arsip"]
-        TY["uov-toy.mjs<br/>UOV mainan di F7"]
+        PR["protocol.mjs<br/>manifest, cek, token QR"]
+        DX --> PR
+        PD --> PR
     end
 
-    subgraph Luar["Layanan dan pustaka luar"]
-        SB[("Supabase<br/>tabel segel_arsip<br/>bucket segel/kunci")]
-        CDN["cdnjs: JSZip, pdf-lib,<br/>qrcode-generator"]
-    end
+    SB[("Supabase<br/>tabel segel_arsip<br/>bucket segel/kunci")]
+    CDN["cdnjs<br/>JSZip, pdf-lib, qrcode-generator"]
 
-    H1 & H2 & H3 & H4 & H5 --> SH
-    SH --> TI
+    Halaman --> SH
     H1 --> KE
     H2 --> KE
-    KE --> UV
-    H2 --> PR & DX & PD & AR
-    H3 --> PR & DX & PD & AR
     H4 --> TY
+    H2 --> Bukti
+    H3 --> Bukti
+    H2 --> AR
+    H3 --> AR
+    KE --> UV
     PR --> UV
-    DX --> PR
-    PD --> PR
     AR --> SB
-    DX -.-> CDN
-    PD -.-> CDN
-    H2 -.-> CDN
-    H3 -.-> CDN
+    Bukti -.-> CDN
 ```
+
+Kalau bagan di atas tidak tampil, buka versi gambarnya: [docs/arsitektur.png](docs/arsitektur.png).
 
 Pembagian tugasnya:
 
@@ -141,10 +142,10 @@ Ini set parameter tingkat 1 NIST dari spesifikasi UOV (varian "uov-Ip").
 
 ### Medan GF(16)
 
-Setiap angka di skema ini adalah elemen GF(16): bilangan 0 sampai 15, dianggap sebagai polinomial berderajat paling tinggi 3 dengan koefisien 0 atau 1. Contohnya 11 = 1011₂ = x³ + x + 1.
+Setiap angka di skema ini adalah elemen GF(16): bilangan 0 sampai 15, dianggap sebagai polinomial berderajat paling tinggi 3 dengan koefisien 0 atau 1. Contohnya $11 = 1011_2 = x^3 + x + 1$.
 
 - Penjumlahan adalah XOR (`^`). Karena 1 + 1 = 0 di sini, pengurangan sama dengan penjumlahan.
-- Perkalian adalah perkalian polinomial yang dikurangi modulo x⁴ + x + 1. Semua 16 × 16 hasilnya dihitung sekali di awal dan disimpan di tabel `mul`, jadi `a · b` cukup dibaca sebagai `mul[(a << 4) | b]`.
+- Perkalian adalah perkalian polinomial yang dikurangi modulo $x^4 + x + 1$. Semua 16 × 16 hasilnya dihitung sekali di awal dan disimpan di tabel `mul`, jadi `a · b` cukup dibaca sebagai `mul[(a << 4) | b]`.
 - `inverse[a]` adalah b dengan a · b = 1. Tabel ini dipakai saat eliminasi Gauss.
 
 Dua elemen GF(16) disimpan dalam satu byte (fungsi `pack` dan `unpack`), karena itu ukuran kunci dibagi dua.
@@ -156,20 +157,28 @@ Fungsi: `generateKeyPair()`.
 Variabel dibagi dua: x = (v, o), dengan v berisi 96 variabel vinegar dan o berisi 64 variabel oil.
 
 1. Pilih F, peta kuadratik rahasia. F terdiri dari 64 persamaan. Persamaan ke-k punya dua blok:
-   - Q (vinegar × vinegar): 96 × 96, hanya segitiga atas yang disimpan, yaitu 96·97/2 = 4.656 koefisien;
+   - Q (vinegar × vinegar): 96 × 96, hanya segitiga atas yang disimpan, yaitu $96 \cdot 97 / 2 = 4656$ koefisien;
    - B (vinegar × oil): 96 × 64 = 6.144 koefisien.
 
    Blok oil × oil tidak ada sama sekali, jadi tidak perlu disimpan. Inilah struktur rahasia UOV:
-   F_k(v, o) = vᵀQ_k v + vᵀB_k o.
-2. Pilih T, transformasi linear rahasia yang bisa dibalik. Di kode, T disimpan sebagai satu matriks A berukuran 96 × 64:
-   T(v, o) = (v + A·o, o).
-   Bentuk ini sama dengan T = [[I, A], [0, I]] di slide. Inversnya T⁻¹ = [[I, −A], [0, I]]. Di GF(16), −A = A, jadi T⁻¹ = T, dan kode memakai rumus yang sama untuk keduanya.
-3. Bentuk P = F ∘ T, yaitu P(x) = F(T(x)). Kode tidak mengalikan matriks besar secara langsung. Kode langsung menghitung tiga blok P_k dengan mengganti v dengan v + A·o di F_k:
-   - blok vinegar × vinegar: Q
-   - blok vinegar × oil: B + (Q + Qᵀ)·A (variabel `D`)
-   - blok oil × oil: Aᵀ(Q·A + B) (variabel `E`), lalu "dilipat" ke segitiga atas: koefisien x_a x_b untuk a < b adalah E_ab + E_ba.
 
-   Hasilnya 64 matriks segitiga atas berukuran 160 × 160, masing-masing 160·161/2 = 12.880 koefisien. Itulah kunci publik: 64 × 12.880 / 2 = 412.160 byte.
+   $$F_k(v, o) = v^{\top} Q_k\, v + v^{\top} B_k\, o$$
+
+2. Pilih T, transformasi linear rahasia yang bisa dibalik. Di kode, T disimpan sebagai satu matriks A berukuran 96 × 64:
+
+   $$T(v, o) = (v + A\,o,\; o)$$
+
+   Bentuk ini sama dengan matriks di slide:
+
+   $$T = \begin{bmatrix} I & A \\ 0 & I \end{bmatrix}, \qquad T^{-1} = \begin{bmatrix} I & -A \\ 0 & I \end{bmatrix}$$
+
+   Di GF(16), $-A = A$, jadi $T^{-1} = T$, dan kode memakai rumus yang sama untuk keduanya.
+3. Bentuk $P = F \circ T$, yaitu $P(x) = F(T(x))$. Kode tidak mengalikan matriks besar secara langsung. Kode langsung menghitung tiga blok $P_k$ dengan mengganti $v$ dengan $v + A\,o$ di $F_k$:
+   - blok vinegar × vinegar: $Q$
+   - blok vinegar × oil: $B + (Q + Q^{\top})\,A$ (variabel `D`)
+   - blok oil × oil: $A^{\top}(Q\,A + B)$ (variabel `E`), lalu "dilipat" ke segitiga atas: koefisien $x_a x_b$ untuk $a < b$ adalah $E_{ab} + E_{ba}$.
+
+   Hasilnya 64 matriks segitiga atas berukuran 160 × 160, masing-masing $160 \cdot 161 / 2 = 12880$ koefisien. Itulah kunci publik: $64 \cdot 12880 / 2 = 412160$ byte.
 
    Blok oil × oil di P sekarang terisi. Struktur kosong di F tersembunyi, dan Cara kerja menunjukkannya dengan angka kecil ("3 dari 3 suku oil × oil terisi").
 4. Simpan sk = (A, F) dan bagikan pk = P. Setelah itu salinan A dan F di memori ditimpa nol.
@@ -178,7 +187,9 @@ Variabel dibagi dua: x = (v, o), dengan v berisi 96 variabel vinegar dan o beris
 
 Fungsi: `target(message, salt)`.
 
-t = SHA-256(domain ‖ M ‖ salt). Hasil SHA-256 adalah 32 byte = 64 nibble (potongan 4 bit), dan tiap nibble adalah satu elemen GF(16). Jadi t ∈ GF(16)⁶⁴, satu nilai untuk tiap persamaan.
+$$t = \operatorname{SHA\text{-}256}(\text{domain} \,\Vert\, M \,\Vert\, \text{salt})$$
+
+Hasil SHA-256 adalah 32 byte = 64 nibble (potongan 4 bit), dan tiap nibble adalah satu elemen GF(16). Jadi $t \in \mathrm{GF}(16)^{64}$, satu nilai untuk tiap persamaan.
 
 - `domain` adalah teks tetap `SEGEL-UOV-160-64-GF16-SHA256-v1`, supaya hash ini tidak bisa tertukar dengan hash untuk keperluan lain.
 - `salt` adalah 16 byte acak yang dibuat setiap kali menandatangani. Akibatnya dokumen yang sama menghasilkan σ berbeda setiap kali disegel. Salt ini detail implementasi dari spesifikasi UOV dan tidak dibahas di slide.
@@ -190,13 +201,19 @@ Fungsi: `sign(message, secretKey)`.
 1. Hitung t = Hash(M) seperti di atas.
 2. Pilih 96 nilai vinegar secara acak (`vin`).
 3. Masukkan vinegar ke F. Karena F tidak punya suku oil × oil, setiap persamaan menjadi linear terhadap oil:
-   F_k(vin, o) = c_k + Σ_j L_kj · o_j,
-   dengan c_k = vinᵀ Q_k vin (konstanta) dan L_kj = Σ_i B_k[i][j] · vin_i. Persamaan yang harus dipenuhi menjadi
-   L · o = t − c,
+
+   $$F_k(\mathrm{vin}, o) = c_k + \sum_{j} L_{kj}\, o_j$$
+
+   dengan $c_k = \mathrm{vin}^{\top} Q_k\, \mathrm{vin}$ (konstanta) dan $L_{kj} = \sum_i (B_k)_{ij}\, \mathrm{vin}_i$. Persamaan yang harus dipenuhi menjadi
+
+   $$L\,o = t - c,$$
+
    yaitu 64 persamaan linear dengan 64 variabel oil.
 4. Selesaikan dengan eliminasi Gauss-Jordan di GF(16) (fungsi `solve`). Kalau matriks L singular, kembali ke langkah 2 dengan vinegar baru. Kode mencoba paling banyak 256 kali. Dalam praktik biasanya langsung berhasil.
 5. Gabungkan u = (vin, o). Sekarang F(u) = t.
-6. Hitung σ = T⁻¹(u). Karena T⁻¹ = T, cukup tambahkan A·o ke bagian vinegar. Lalu P(σ) = F(T(T⁻¹(u))) = F(u) = t.
+6. Hitung $\sigma = T^{-1}(u)$. Karena $T^{-1} = T$, cukup tambahkan $A\,o$ ke bagian vinegar. Lalu
+
+   $$P(\sigma) = F\big(T(T^{-1}(u))\big) = F(u) = t.$$
 7. Tanda tangan = σ (160 elemen = 80 byte) + salt (16 byte) = 96 byte.
 
 Hanya pemegang A dan F yang bisa melakukan langkah 3, karena tanpa F persamaannya tetap kuadratik.
@@ -207,14 +224,16 @@ Fungsi: `verify(message, signature, publicKey)`.
 
 1. Pisahkan σ dan salt dari tanda tangan.
 2. Hitung t = Hash(M) dengan salt itu.
-3. Hitung t′ = P(σ): untuk tiap persamaan k, jumlahkan P_k[i][j] · σ_i · σ_j untuk semua i ≤ j.
-4. Tanda tangan sah jika t′ = t di ke-64 persamaan.
+3. Hitung $t' = P(\sigma)$, yaitu untuk tiap persamaan $k$:
+
+   $$t'_k = \sum_{i \le j} (P_k)_{ij}\, \sigma_i\, \sigma_j$$
+4. Tanda tangan sah jika $t' = t$ di ke-64 persamaan.
 
 Verify hanya memakai kunci publik P. Kunci privat tidak diperlukan.
 
 ### Kenapa ini diyakini aman
 
-Penyerang hanya melihat P. Untuk memalsukan σ tanpa F dan T, ia harus menyelesaikan 64 persamaan kuadratik dengan 160 variabel di GF(16). Itu masalah MQ, yang diyakini sulit, juga untuk komputer kuantum. Mencari F dan T kembali dari P juga diyakini sulit. Ruang pencarian σ secara paksa adalah 16¹⁶⁰ ≈ 10¹⁹².
+Penyerang hanya melihat P. Untuk memalsukan σ tanpa F dan T, ia harus menyelesaikan 64 persamaan kuadratik dengan 160 variabel di GF(16). Itu masalah MQ, yang diyakini sulit, juga untuk komputer kuantum. Mencari F dan T kembali dari P juga diyakini sulit. Ruang pencarian σ secara paksa adalah $16^{160} \approx 10^{192}$.
 
 ### Versi kecil untuk Cara kerja
 
@@ -224,11 +243,11 @@ Penyerang hanya melihat P. Untuk memalsukan σ tanpa F dan T, ia harus menyelesa
 |---|---|---|
 | Medan | GF(16) | 𝔽₇ (sisa bagi 7) |
 | n, v, m | 160, 96, 64 | 6, 4, 2 |
-| T⁻¹ | sama dengan T | [[I, −A], [0, I]] |
+| $T^{-1}$ | sama dengan $T$ | $\begin{bmatrix} I & -A \\ 0 & I \end{bmatrix}$ |
 | Menyelesaikan oil | eliminasi Gauss 64 × 64 | sistem 2 × 2 dengan determinan |
 | Hash | SHA-256 → 64 nibble | SHA-256 → dua bilangan 16 bit mod 7 |
 
-Dengan 7⁶ = 117.649 kandidat σ, versi kecil bisa dipecahkan dengan mencoba semuanya. Tombol "Coba bobol contoh 𝔽₇ ini" di Cara kerja melakukan hal itu.
+Dengan $7^6 = 117649$ kandidat σ, versi kecil bisa dipecahkan dengan mencoba semuanya. Tombol "Coba bobol contoh 𝔽₇ ini" di Cara kerja melakukan hal itu.
 
 ## Dari dokumen ke pesan M
 
@@ -284,6 +303,7 @@ node test-toy.mjs     # UOV kecil di F7: 300 pasangan kunci
 ## Struktur berkas
 
 ```
+docs/                   gambar PNG dari kedua bagan Mermaid di README
 index.html              Beranda
 tandatangani/           Halaman Sign
 verifikasi/             Halaman Verify
