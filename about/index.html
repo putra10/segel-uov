@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About Us · Segel</title>
+<meta name="description" content="Segel dibuat oleh Kelompok 3B mata kuliah Pemodelan Matematika, Departemen Matematika FMIPA Universitas Indonesia.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Segel">
+<meta property="og:title" content="About Us · Segel">
+<meta name="theme-color" content="#7a2620">
+<script>try{var t=localStorage.getItem('segel-tema');if(t==='gelap'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.classList.add('gelap')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/segel.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23a3302c'/%3E%3Ccircle cx='16' cy='16' r='4.3' fill='%23fff'/%3E%3Ccircle cx='16' cy='16' r='8.6' fill='none' stroke='%23fff' stroke-width='1.5' stroke-dasharray='2.1 1.7'/%3E%3C/svg%3E">
+</head>
+<body class="lak">
+<main id="isi">
+  <section class="hero hero-kecil tentang-hero">
+    <div class="hero-latar" aria-hidden="true"></div>
+    <div class="wadah">
+      <span class="alis">About Us</span>
+      <h1>Kelompok 3B, <em>Pemodelan Matematika.</em></h1>
+      <p class="pengantar">Kami memodelkan tanda tangan digital dengan UOV, skema yang keamanannya bertumpu pada sulitnya menyelesaikan sistem persamaan kuadratik multivariat. Segel adalah hasil penerapan model itu.</p>
+    </div>
+  </section>
+
+  <section class="bagian">
+    <div class="wadah">
+      <div class="judul-tengah">
+        <h2>Tim <em>kami</em></h2>
+        <p class="pengantar">Mahasiswa S1 Matematika, Departemen Matematika FMIPA Universitas Indonesia.</p>
+      </div>
+      <div class="cetak" style="--kolom:3">
+        <div><span class="no">01</span><h3>Eksha Zora Athallah</h3></div>
+        <div><span class="no">02</span><h3>Muhammad Ahsan Nazarudin</h3></div>
+        <div><span class="no">03</span><h3>Muhammad Fawwaz Abadhas</h3></div>
+        <div><span class="no">04</span><h3>Putra Muhammad Rafy</h3></div>
+        <div><span class="no">05</span><h3>Rafi Darmawan Yuana Putra</h3></div>
+        <div><span class="no">06</span><h3>Rodear Gemilang Saragih</h3></div>
+      </div>
+      <div class="cetak tentang-dosen" style="--kolom:1">
+        <div><span class="no">Dosen fasilitator</span><h3>Muhammad Imran, S.Si., M.Sc., Ph.D.</h3><p>Pemodelan Matematika, tahun ajaran 2026/27.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bagian">
+    <div class="wadah">
+      <div class="judul-tengah">
+        <h2>Dari tanda tangan pindaian <em>ke UOV</em></h2>
+      </div>
+      <div class="cetak" style="--kolom:4">
+        <div><span class="no">Presentasi 1</span><h3>Tanda tangan pindaian</h3><p>Model awal menilai dokumen D, citra tanda tangan S, dan bukti E dengan skor berbobot dan ambang τ.</p></div>
+        <div><span class="no">Klarifikasi</span><h3>Beralih ke kriptografi</h3><p>Variabel tanda tangan pindaian terlalu ambigu. Kami pindah ke tanda tangan digital yang keabsahannya bisa diperiksa secara matematis.</p></div>
+        <div><span class="no">Presentasi 2</span><h3>Model dan metode</h3><p>KeyGen, Sign, dan Verify, lalu skema UOV: oil dan vinegar, peta F, transformasi T, dan P = F ∘ T.</p></div>
+        <div class="inti"><span class="no">Presentasi 3</span><h3>Segel</h3><p>Model diterapkan menjadi situs untuk menandatangani dokumen, membuat QR, dan memeriksa keasliannya.</p></div>
+      </div>
+      <div class="tengah"><a href="../cara-kerja/" class="tombol">Lihat cara kerjanya <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div>
+    </div>
+  </section>
+
+  <section class="bagian" id="rujukan">
+    <div class="wadah">
+      <div class="judul-tengah">
+        <h2>Rujukan</h2>
+      </div>
+      <ol class="rujukan">
+          <li><b>Boneh &amp; Shoup (2023), <i>A Graduate Course in Applied Cryptography</i>, v0.6.</b><span>§13.1–13.2, hlm. 528–534: definisi, game keamanan, hash-and-sign. <a href="https://toc.cryptobook.us/book.pdf" target="_blank" rel="noopener">toc.cryptobook.us ↗</a></span></li>
+          <li><b>Kipnis, Patarin &amp; Goubin (1999), <i>Unbalanced Oil and Vinegar Signature Schemes</i>.</b><span>EUROCRYPT ’99, hlm. 206–222; §2, hlm. 207–209. DOI: 10.1007/3-540-48910-X_15. <a href="https://doi.org/10.1007/3-540-48910-X_15" target="_blank" rel="noopener">doi.org ↗</a></span></li>
+          <li><b>Ding, Petzoldt &amp; Schmidt (2020), <i>Multivariate Public Key Cryptosystems</i>.</b><span>§5.1, hlm. 90–92 dan §5.2.5, hlm. 109–111: struktur OV dan UOV. <a href="https://archive.ymsc.tsinghua.edu.cn/pacm_download/672/12673-dingjt-b2.pdf" target="_blank" rel="noopener">archive.ymsc.tsinghua.edu.cn ↗</a></span></li>
+          <li><b>Tim UOV (5 Februari 2025), <i>UOV Specification</i>, v2.0, Round 2.</b><span>§2.1, hlm. 7; §2.3, Gbr. 1, hlm. 9; §3.2.3, Gbr. 2, hlm. 16–17; §3.3, hlm. 19. <a href="https://csrc.nist.gov/csrc/media/Projects/pqc-dig-sig/documents/round-2/spec-files/uov-spec-round2-web.pdf" target="_blank" rel="noopener">csrc.nist.gov ↗</a></span></li>
+          <li><b>Tim UOV, <i>UOV Specification</i>, Round 1.</b><span>Dirujuk pada catatan pembicara Presentasi II. <a href="https://csrc.nist.gov/csrc/media/Projects/pqc-dig-sig/documents/round-1/spec-files/UOV-spec-web.pdf" target="_blank" rel="noopener">csrc.nist.gov ↗</a></span></li>
+          <li><b>Panduan dosen, <i>Pemodelan Tanda Tangan Konvensional dan Digital Pascakuantum</i>.</b><span>Langkah 12–13, Jalur UOV, dan Protokol Eksperimen Bersama.</span></li>
+          <li><b>NIST (14 Mei 2026), <i>Pengumuman NIST mengenai kandidat tanda tangan tambahan Putaran Tiga</i>.</b><span>National Institute of Standards and Technology.</span></li>
+          <li><b>R. Munir (2004), <i>Otentikasi dan Tandatangan Digital</i>.</b><span>Bahan Kuliah IF5054 Kriptografi, Departemen Teknik Informatika, Institut Teknologi Bandung.</span></li>
+          <li><b>W. Stallings (2006), <i>Cryptography and Network Security</i>, edisi ke-4.</b><span>Pearson.</span></li>
+          <li><b>NIST IR 8610.</b><span>National Institute of Standards and Technology. <a href="https://doi.org/10.6028/NIST.IR.8610" target="_blank" rel="noopener">doi.org ↗</a></span></li>
+      </ol>
+    </div>
+  </section>
+</main>
+<script type="module">import { pasangShell } from '../js/shell.mjs'; pasangShell();</script>
+</body>
+</html>

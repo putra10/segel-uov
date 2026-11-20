@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign · Segel</title>
+<script>try{var t=localStorage.getItem('segel-tema');if(t==='gelap'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.classList.add('gelap')}catch(e){}</script>
+<meta name="description" content="Taruh dokumen, tulis nama Anda, lalu segel dengan UOV. Hasilnya dokumen bertanda tangan atau paket tanda tangan (.json), beserta QR.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Segel">
+<meta property="og:title" content="Sign · Segel">
+<meta property="og:description" content="Taruh dokumen, tulis nama Anda, lalu segel dengan UOV. Hasilnya dokumen bertanda tangan atau paket tanda tangan (.json), beserta QR.">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#7a2620">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/segel.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23a3302c'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%23fff' stroke-width='2.4'/%3E%3C/svg%3E">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+</head>
+<body class="lak">
+<main id="isi">
+  <!-- Satu panggung: seluruh blok merah adalah tempat menaruh dokumen. -->
+  <section class="hero kerja" id="panggung">
+    <div class="hero-latar" aria-hidden="true"></div>
+    <div class="wadah kerja-isi">
+      <div class="kerja-kiri">
+        <span class="alis">Sign</span>
+        <h1>Segel dokumen <em>Anda.</em></h1>
+
+        <label class="garis-nama">ditandatangani oleh
+          <input type="text" id="nama" maxlength="120" placeholder="Bob" autocomplete="name" spellcheck="false">
+        </label>
+
+        <div class="kunci-baris" id="kunci-pilih">
+          <button class="tombol garis-terang kecil" id="buat-kunci" type="button">Buat pasangan kunci UOV</button>
+          <span class="tautan-sekunder"><label>atau impor cadangan kunci privat (.json)<input type="file" id="muat" accept=".json,application/json" hidden></label></span>
+        </div>
+        <div class="kunci-baris" id="kunci-siap" hidden>
+          <span class="kunci-status"><i class="titik" aria-hidden="true"></i>Kunci siap · <span class="mono" id="fp-atas"></span></span>
+          <span class="tautan-sekunder"><button type="button" id="ganti-kunci">Ganti kunci</button></span>
+        </div>
+
+        <div id="dok">
+          <label class="dok-kosong" for="berkas">
+            <b>Taruh dokumen di sini</b>
+            <span>atau <u>pilih file</u>. PDF, DOCX, gambar, apa saja, sampai 50 MB.</span>
+          </label>
+        </div>
+        <input type="file" id="berkas" hidden>
+
+        <p class="pesan" id="pesan" aria-live="polite"></p>
+        <div class="aksi">
+          <button class="tombol terang besar" id="utama" type="button">Segel dokumen</button>
+          <span id="sekunder" class="tautan-sekunder"></span>
+        </div>
+
+
+        <details class="laci" id="laci">
+          <summary>Lanjutan: cadangkan kunci</summary>
+          <div class="laci-isi">
+            <p>Unduh cadangan kunci privat, lalu impor lagi lain kali supaya tanda tangan berikutnya memakai identitas yang sama. Sidik jari kunci saat ini: <span id="fp-ringkas" class="mono">belum ada kunci</span></p>
+            <div class="tautan-sekunder">
+              <button type="button" id="unduh-priv">Unduh kunci privat</button>
+              <button type="button" id="unduh-pub">Unduh kunci publik</button>
+            </div>
+            <p class="peringatan">Siapa pun yang memegang kunci privat bisa menandatangani atas nama Anda. Jangan bagikan file itu.</p>
+          </div>
+        </details>
+      </div>
+
+      <div class="kerja-kanan">
+        <canvas id="kanvas" role="img" aria-label="Cap segel dari titik. Terbentuk dari tanda tangan sigma setelah dokumen disegel."></canvas>
+        <div class="kartu-bukti" id="kartu" hidden>
+          <div class="qr-kecil" id="qr"></div>
+          <div><b id="kartu-judul">Tersegel</b><span id="kartu-rinci"></span></div>
+        </div>
+        <p class="kanvas-ket" id="ket">Cap terbentuk dari σ setelah dokumen disegel</p>
+      </div>
+    </div>
+    <div class="lepas" aria-hidden="true">Lepaskan untuk menyegel</div>
+  </section>
+
+  <section class="wadah rincian-kerja" id="rincian">
+    <div><h4>Yang ditandatangani</h4><p>Sidik jari SHA-256 dokumen, nama penanda tangan, dan waktunya.</p></div>
+    <div><h4>Yang dirahasiakan</h4><p>Kunci privat. Simpan cadangannya lewat menu Lanjutan kalau ingin memakai identitas yang sama lagi.</p></div>
+    <div><h4>Yang dibagikan</h4><p>Dokumen bertanda tangan. Untuk PDF dan DOCX, buktinya sudah ada di dalam file itu.</p></div>
+  </section>
+
+</main>
+
+<script type="module">
+import { pasangShell, ukuran, esc, unduh, ekstensi, qrPng } from '../js/shell.mjs';
+import { segelTitik } from '../js/titik.mjs';
+import * as uov from '../js/uov.mjs';
+import { ALGORITHM, signFile, toToken, fingerprint, shortFp, sha256, b64, unb64 } from '../js/protocol.mjs';
+import { tandatanganiDocx, apakahDocx } from '../js/docx.mjs';
+import { tandatanganiPdf, apakahPdf } from '../js/pdf.mjs';
+import { idBaru, simpan } from '../js/arsip.mjs';
+pasangShell();
+const $ = id => document.getElementById(id);
+const segel = segelTitik($('kanvas'));
+segel.atur(null, 'redup');
+
+let kunci = null, dok = null, bukti = null;
+const pesan = (t = '') => { $('pesan').textContent = t; };
+const jeda = () => new Promise(r => requestAnimationFrame(() => setTimeout(r, 0)));
+
+// Kunci dibuat di worker supaya halaman tetap lancar.
+const kerja = new Worker('../js/kerja.mjs', { type: 'module' });
+kerja.onmessage = async ({ data }) => {
+  $('buat-kunci').disabled = false; $('buat-kunci').textContent = 'Buat pasangan kunci UOV';
+  if (data.res) { await pakaiKunci(data.res); pesan(''); } else pesan('Gagal membuat kunci. Coba lagi.');
+};
+$('buat-kunci').onclick = () => {
+  if (!$('nama').value.trim()) { $('nama').focus(); return pesan('Tulis nama penanda tangan dulu.'); }
+  $('buat-kunci').disabled = true; $('buat-kunci').textContent = 'Membuat kunci…'; pesan('');
+  kerja.postMessage({ id: 1, op: 'pasangan' });
+};
+$('ganti-kunci').onclick = () => {
+  kunci = null; $('kunci-siap').hidden = true; $('kunci-pilih').hidden = false;
+  $('fp-ringkas').textContent = 'belum ada kunci'; if (bukti) kembali();
+};
+
+async function pakaiKunci(k) {
+  kunci = k; kunci.fp = await fingerprint(k.publicKey);
+  $('fp-ringkas').textContent = $('fp-atas').textContent = shortFp(kunci.fp) + ' …';
+  $('fp-ringkas').title = $('fp-atas').title = kunci.fp;
+  $('kunci-pilih').hidden = true; $('kunci-siap').hidden = false;
+}
+
+function tampilDok() {
+  $('dok').innerHTML = `<div class="dok-kartu">
+    <span class="ikon">${esc(ekstensi(dok.name))}</span>
+    <div><b>${esc(dok.name)}</b><span class="mono">${ukuran(dok.bytes.length)} · SHA-256 ${dok.sha.slice(0, 16)}…</span></div>
+    <label for="berkas" class="ganti">Ganti</label></div>` + (dok.jenis ? `
+    <label class="opsi-docx"><input type="checkbox" id="opsi-docx" checked> ${dok.jenis === 'pdf' ? 'Tambahkan lembar tanda tangan ke PDF ini' : 'Sisipkan tanda tangan dan QR ke dalam DOCX (buktinya disimpan di arsip agar QR bisa dibuka)'}</label>` : '');
+}
+
+async function pilih(f) {
+  if (!f) return;
+  if (f.size > 50 * 1048576) return pesan('File lebih dari 50 MB. Pilih file yang lebih kecil.');
+  pesan('');
+  const bytes = new Uint8Array(await f.arrayBuffer());
+  dok = { name: f.name, bytes, sha: await sha256(bytes), jenis: apakahDocx(f.name, bytes) ? 'docx' : apakahPdf(f.name, bytes) ? 'pdf' : null };
+  tampilDok();
+  if (bukti) kembali();
+}
+
+$('berkas').onchange = e => { pilih(e.target.files[0]); e.target.value = ''; };
+const panggung = $('panggung');
+panggung.addEventListener('dragover', e => { e.preventDefault(); panggung.classList.add('di-atas'); });
+panggung.addEventListener('dragleave', e => { if (!panggung.contains(e.relatedTarget)) panggung.classList.remove('di-atas'); });
+panggung.addEventListener('drop', e => { e.preventDefault(); panggung.classList.remove('di-atas'); pilih(e.dataTransfer.files[0]); });
+
+async function segelkan() {
+  const nama = $('nama').value.trim();
+  if (!dok) return pesan('Taruh dokumen dulu di blok ini.');
+  if (!nama) { $('nama').focus(); return pesan('Tulis nama penanda tangan.'); }
+  if (!kunci) return pesan('Buat pasangan kunci atau impor cadangannya dulu.');
+  pesan(''); segel.atur(null, 'proses'); $('utama').disabled = true; $('utama').textContent = 'Menyegel…';
+  await jeda();
+  try {
+    const mulai = performance.now();
+    dok.hasil = null; dok.arsipId = null; dok.ms = null; dok.idQR = null;
+    if (dok.jenis && $('opsi-docx')?.checked) {
+      const asal = new URL('../', location.href).href.replace(/\/$/, '');
+      const idQR = dok.idQR = dok.jenis === 'docx' ? idBaru() : null;
+      const r = dok.jenis === 'pdf' ? await tandatanganiPdf(dok.bytes, dok.name, nama, kunci, asal)
+        : await tandatanganiDocx(dok.bytes, dok.name, nama, kunci, asal, b => unb64(buatQR(tautanUntuk(b, idQR)).createDataURL(4, 4).split(',')[1]));
+      bukti = r.bukti; dok.hasil = r.hasil;
+      dok.ms = Math.round(performance.now() - mulai);
+      if (idQR) await arsipkan(idQR, true);
+    } else bukti = await signFile(dok.bytes, dok.name, nama, kunci);
+    dok.ms ??= Math.round(performance.now() - mulai);
+    tampilkan(dok.ms);
+  } catch (err) { segel.atur(null, 'redup'); pesan('Gagal menyegel: ' + err.message); $('utama').textContent = 'Segel dokumen'; }
+  finally { $('utama').disabled = false; }
+}
+
+function tampilkan(ms) {
+  const m = bukti.manifest, sig = unb64(bukti.signature);
+  const tautan = tautanUntuk(bukti, dok.arsipId), qr = buatQR(tautan);
+  const svgQR = qr.createSvgTag({ cellSize: 4, margin: 0, scalable: true });
+  segel.atur(sig, 'utuh');
+  $('qr').innerHTML = svgQR;
+  $('kartu-rinci').textContent = dok.arsipId ? `ID arsip ${dok.arsipId}` : `σ 96 byte · ${ms} ms`;
+  $('kartu').hidden = false;
+  $('ket').textContent = 'Cap ini digambar dari σ.\nTiap titik adalah satu dari 160 angkanya.';
+  const unduhBukti = () => unduh(m.name + ' - paket tanda tangan.json', JSON.stringify(bukti), 'application/json');
+  if (dok.hasil) {
+    const pdf = dok.jenis === 'pdf', ext = pdf ? '.pdf' : '.docx';
+    const namaHasil = m.name.replace(/\.(docx|pdf)$/i, '') + ' (tersegel)' + ext;
+    $('utama').textContent = pdf ? 'Unduh PDF bertanda tangan' : 'Unduh DOCX bertanda tangan';
+    $('utama').onclick = () => unduh(namaHasil, dok.hasil, pdf ? 'application/pdf' : 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+    $('kartu-judul').textContent = pdf ? 'Tersegel di dalam PDF' : 'Tersegel di dalam DOCX';
+  } else {
+    $('utama').textContent = 'Unduh paket tanda tangan (.json)';
+    $('utama').onclick = unduhBukti;
+    $('kartu-judul').textContent = 'Tersegel';
+  }
+  $('sekunder').innerHTML = (dok.hasil ? `<button type="button" id="u-bukti">Paket tanda tangan (.json)</button>` : '') + (dok.arsipId ? '' : `<button type="button" id="arsipkan">Simpan bukti ke arsip & buat QR</button>`) + `<button type="button" id="u-qr">Unduh QR (PNG)</button><button type="button" id="salin">Salin tautan</button><button type="button" id="lagi">Segel dokumen lain</button>`;
+  if (dok.hasil) $('u-bukti').onclick = unduhBukti;
+  if (!dok.arsipId) $('arsipkan').onclick = async () => {
+    $('arsipkan').disabled = true; $('arsipkan').textContent = 'Menyimpan ke arsip…';
+    // DOCX ber-QR sudah memuat ID-nya sendiri, jadi simpan ulang memakai ID itu.
+    if (await arsipkan(dok.idQR ?? idBaru())) tampilkan(ms);
+    else { $('arsipkan').disabled = false; $('arsipkan').textContent = 'Simpan bukti ke arsip & buat QR'; }
+  };
+  $('u-qr').onclick = async () => unduh(m.name + ' - QR.png', await qrPng(tautan), 'image/png');
+  $('salin').onclick = async () => { try { await navigator.clipboard.writeText(tautan); $('salin').textContent = 'Tautan tersalin'; } catch { prompt('Salin tautan ini:', tautan); } };
+  $('lagi').onclick = () => { dok = null; $('dok').innerHTML = `<label class="dok-kosong" for="berkas"><b>Taruh dokumen di sini</b><span>atau <u>pilih file</u>. PDF, DOCX, gambar, apa saja, sampai 50 MB.</span></label>`; kembali(); };
+  $('rincian').innerHTML = `
+    <div><h4>Waktu</h4><p>${esc(new Date(m.at).toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' }))}</p></div>
+    <div><h4>Penanda tangan</h4><p>${esc(m.signer)}</p></div>
+    <div><h4>${m.profil === 'docx-v1' ? 'Hash isi DOCX' : 'SHA-256 dokumen'}</h4><p class="mono">${m.sha256.slice(0, 24)}…</p></div>
+    <div><h4>Sidik jari kunci</h4><p class="mono">${shortFp(m.key)} …</p></div>
+    ${dok.arsipId ? `<div><h4>ID arsip</h4><p class="mono">${dok.arsipId}</p></div>` : ''}
+    <p class="catatan-bagi">${dok.arsipId ? 'Bukti tersimpan di arsip. Penerima memindai QR atau memasukkan ID arsip di halaman Verify, lalu memilih salinan dokumen yang ia terima. ' : ''}${m.profil ? `Kirim ${m.profil === 'pdf-v1' ? 'PDF' : 'DOCX'} bertanda tangan itu saja. Penerima cukup membukanya di halaman Verify. Kalau isinya diubah lalu disimpan ulang, tanda tangannya tidak berlaku lagi.` : 'Kirim dokumen asli bersama paket tanda tangan (.json). Kalau memakai QR, penerima juga perlu kunci publik Anda, karena kuncinya terlalu besar untuk QR.'}</p>`;
+}
+
+// Tautan verifikasi: ID arsip (jika ada) dan token σ. Token tetap ikut supaya QR berguna walau arsip tidak bisa dihubungi.
+function tautanUntuk(b, id = null) { return new URL('../verifikasi/', location.href).href + '#' + (id ? 'a=' + id + '&' : '') + 's=' + toToken(b); }
+
+// Simpan bukti dan kunci publik ke arsip. Dokumennya tidak ikut disimpan.
+async function arsipkan(id, otomatis = false) {
+  try {
+    pesan('Menyimpan ke arsip…');
+    await simpan(id, bukti, kunci.publicKey);
+    dok.arsipId = id; pesan(''); return true;
+  } catch (err) {
+    pesan((otomatis ? 'Dokumen sudah tersegel, tetapi belum tersimpan di arsip: ' : 'Gagal menyimpan ke arsip: ') + err.message + (otomatis ? ' QR di dalamnya tetap memuat tanda tangan.' : ''));
+    return false;
+  }
+}
+function buatQR(teks) { const q = qrcode(0, 'L'); q.addData(teks); q.make(); return q; }
+
+function kembali() {
+  bukti = null; segel.atur(null, 'redup'); $('kartu').hidden = true; $('sekunder').innerHTML = '';
+  $('ket').textContent = 'Cap terbentuk dari σ setelah dokumen disegel';
+  $('utama').textContent = 'Segel dokumen'; $('utama').onclick = segelkan;
+}
+$('utama').onclick = segelkan;
+
+$('unduh-priv').onclick = () => kunci && unduh('segel-kunci-privat.json', JSON.stringify({ alg: ALGORITHM, signer: $('nama').value.trim(), fingerprint: kunci.fp, publicKey: b64(kunci.publicKey), secretKey: b64(kunci.secretKey) }), 'application/json');
+$('unduh-pub').onclick = () => kunci && unduh('segel-kunci-publik.json', JSON.stringify({ alg: ALGORITHM, signer: $('nama').value.trim(), fingerprint: kunci.fp, publicKey: b64(kunci.publicKey) }), 'application/json');
+$('muat').onchange = async e => {
+  const f = e.target.files[0]; e.target.value = ''; if (!f) return;
+  $('fp-ringkas').textContent = 'memeriksa…'; await jeda();
+  try {
+    if (f.size > 2e6) throw Error('File terlalu besar untuk file kunci.');
+    const j = JSON.parse(await f.text());
+    if (j.alg !== ALGORITHM || !j.secretKey) throw Error('Ini bukan file kunci privat Segel.');
+    const k = { publicKey: unb64(j.publicKey), secretKey: unb64(j.secretKey) }, uji = new TextEncoder().encode('uji pasangan kunci');
+    if (!await uov.verify(uji, await uov.sign(uji, k.secretKey), k.publicKey)) throw Error('Kunci privat dan publik di file ini tidak berpasangan.');
+    if (j.signer && !$('nama').value.trim()) $('nama').value = j.signer;
+    await pakaiKunci(k); pesan('Kunci dari ' + f.name + ' dipakai.');
+  } catch (err) { pesan(err.message); $('fp-ringkas').textContent = kunci ? shortFp(kunci.fp) + ' …' : 'belum ada kunci'; }
+};
+</script>
+</body>
+</html>

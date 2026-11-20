@@ -33,7 +33,7 @@ async function tambahLembar(bytes, penanda, waktu, fp, asalSitus) {
   tulis(`Waktu: ${waktu.toLocaleString('id-ID', { dateStyle: 'long', timeStyle: 'short' })}`);
   tulis(`Sidik jari kunci: ${shortFp(fp)} ...`);
   y -= 8;
-  tulis(`Periksa keasliannya dengan membuka berkas ini di ${asalSitus}/verifikasi.html.`, biasa, 9.5);
+  tulis(`Periksa keasliannya dengan membuka berkas ini di ${asalSitus}/verifikasi/.`, biasa, 9.5);
   tulis('Mengubah lalu menyimpan ulang PDF ini membuat tanda tangan tidak berlaku.', biasa, 9.5);
   // Tanpa object stream supaya trailer dan xref klasik bisa dibaca untuk pembaruan inkremental.
   return pdf.save({ useObjectStreams: false });

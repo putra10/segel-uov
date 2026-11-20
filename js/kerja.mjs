@@ -6,7 +6,7 @@ onmessage = async ({ data: { id, op, text, sig } }) => {
     const msg = new TextEncoder().encode(text ?? ''), t0 = performance.now();
     let res;
     if (op === 'keygen') { keys = uov.generateKeyPair(); res = true; }
-    if (op === 'pasangan') res = uov.generateKeyPair(); // kunci untuk halaman Tanda tangani, dikirim balik utuh
+    if (op === 'pasangan') res = uov.generateKeyPair(); // kunci untuk halaman Sign, dikirim balik utuh
     if (op === 'sign') res = await uov.sign(msg, keys.secretKey);
     if (op === 'verify') res = await uov.verify(msg, sig, keys.publicKey);
     postMessage({ id, res, ms: Math.round(performance.now() - t0) });

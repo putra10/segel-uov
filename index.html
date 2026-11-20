@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Segel · Tanda tangan dokumen pascakuantum</title>
-<meta name="description" content="Segel menandatangani dan memeriksa dokumen dengan skema UOV pascakuantum. Semua perhitungan berjalan di browser, jadi dokumen tidak diunggah.">
+<meta name="description" content="Segel menandatangani dan memeriksa dokumen dengan UOV, skema tanda tangan yang diyakini tahan terhadap komputer kuantum.">
 <script>try{var t=localStorage.getItem('segel-tema');if(t==='gelap'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.classList.add('gelap')}catch(e){}</script>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Segel">
 <meta property="og:title" content="Segel · Tanda tangan dokumen pascakuantum">
-<meta property="og:description" content="Segel menandatangani dan memeriksa dokumen dengan skema UOV pascakuantum. Semua perhitungan berjalan di browser, jadi dokumen tidak diunggah.">
+<meta property="og:description" content="Segel menandatangani dan memeriksa dokumen dengan UOV, skema tanda tangan yang diyakini tahan terhadap komputer kuantum.">
 <meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#7a2620">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,9 +28,9 @@
     <canvas class="hero-kanvas" id="kanvas" role="img" aria-label="Cap segel dari titik-titik. Ukuran tiap titik adalah satu elemen tanda tangan sigma."></canvas>
     <div class="wadah hero-isi">
       <div class="hero-teks">
-        <span class="alis">Tanda tangan pascakuantum, langsung di browser.</span>
+        <span class="alis">Tanda tangan dokumen pascakuantum</span>
         <h1>Satu huruf berubah,<br><em>segelnya retak.</em></h1>
-        <p class="pengantar">Segel menandatangani dokumen dengan UOV, skema yang diyakini tahan terhadap komputer kuantum. Semua perhitungan berjalan di browser Anda, jadi dokumen tidak diunggah dan Anda tidak perlu akun.</p>
+        <p class="pengantar">Segel menandatangani dokumen dengan UOV, skema yang diyakini tahan terhadap komputer kuantum. Penerima memeriksanya dengan kunci publik penanda tangan.</p>
         <div class="coba">
           <label for="surat">Isi dokumen · ubah untuk mencoba</label>
           <div class="coba-baris">
@@ -38,19 +38,20 @@
             <button class="chip-status proses" id="status" type="button" disabled><span class="titik"></span><span id="status-judul">Membuat kunci</span></button>
           </div>
           <div class="coba-rinci" id="status-rinci" aria-live="polite"></div>
+          <a class="coba-tautan" id="ke-cara" href="cara-kerja/#eksperimen">Lihat perhitungan surat ini di Cara kerja →</a>
         </div>
         <div class="baris-tombol">
-          <a href="tandatangani.html" class="tombol terang">Segel dokumen <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
-          <a href="verifikasi.html" class="tombol garis-terang">Periksa dokumen <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+          <a href="tandatangani/" class="tombol terang">Segel dokumen <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+          <a href="verifikasi/" class="tombol garis-terang">Periksa dokumen <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
         </div>
       </div>
       <div class="hero-kaki">
         <dl class="hero-angka">
           <div><dt>96 byte</dt><dd>tanda tangan</dd></div>
           <div><dt>0,1 detik</dt><dd>untuk menyegel</dd></div>
-          <div><dt>0 byte</dt><dd>diunggah</dd></div>
         </dl>
-        <p class="kanvas-ket">σ · 160 elemen GF(16) · tiap titik satu nilai</p>
+        <p class="kanvas-ket">Cap ini digambar dari tanda tangan σ.
+Tiap titik adalah satu dari 160 angkanya.</p>
       </div>
     </div>
   </section>
@@ -59,16 +60,16 @@
     <div class="wadah">
       <div class="judul-tengah">
         <h2>Tanda tangan sebagai <em>solusi persamaan</em></h2>
-        <p class="pengantar">Algoritma Shor bisa memecahkan RSA di komputer kuantum. UOV memakai sistem persamaan kuadratik multivariat, yang sampai sekarang belum diketahui punya algoritma kuantum yang cepat. UOV lolos ke putaran 3 seleksi tanda tangan NIST tahun 2026.</p>
+        <p class="pengantar">Algoritma Shor bisa memecahkan RSA dan ECC di komputer kuantum. UOV memakai sistem persamaan kuadratik multivariat, yang sampai sekarang belum diketahui punya algoritma kuantum yang cepat. UOV lolos ke putaran 3 seleksi tanda tangan NIST tahun 2026.</p>
       </div>
       <p class="rumus-besar" aria-label="P sama dengan F komposisi T">P = F <i>∘</i> T</p>
       <div class="cetak" style="--kolom:4">
         <div><span class="no">F · rahasia</span><h3>Peta oil dan vinegar</h3><p>Sistem kuadratik tanpa suku oil × oil. Setelah nilai vinegar dipilih, sistemnya menjadi linear.</p></div>
         <div><span class="no">T · rahasia</span><h3>Pengacak linear</h3><p>Transformasi yang bisa dibalik. T mencampur variabel sehingga struktur F tidak terlihat.</p></div>
         <div><span class="no">P · publik</span><h3>Yang dibagikan</h3><p>Semua orang memakai P untuk memeriksa tanda tangan. Mencari F dan T dari P diyakini sulit.</p></div>
-        <div class="inti"><span class="no">σ · tanda tangan</span><h3>Solusinya</h3><p>σ memenuhi P(σ) = H(dokumen). Hanya pemegang F dan T yang bisa menemukannya dengan cepat.</p></div>
+        <div class="inti"><span class="no">σ · tanda tangan</span><h3>Solusinya</h3><p>σ memenuhi P(σ) = t, dengan t = Hash(M). Hanya pemegang F dan T yang bisa menemukannya dengan cepat.</p></div>
       </div>
-      <div class="tengah"><a href="cara-kerja.html" class="tombol">Lihat perhitungannya dengan angka kecil <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div>
+      <div class="tengah"><a href="cara-kerja/" class="tombol">Lihat perhitungannya dengan angka kecil <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div>
     </div>
   </section>
 
@@ -82,9 +83,30 @@
     <div class="wadah">
       <div class="judul-tengah">
         <h2>Dari penanda tangan <em>ke penerima</em></h2>
-        <p class="pengantar">Penanda tangan menyegel dokumen di halaman Tanda tangani. Penerima memeriksanya di halaman Verifikasi dengan kunci publik, tanpa perlu menghubungi penanda tangan.</p>
+        <p class="pengantar">Penanda tangan menyegel dokumen di halaman Sign. Penerima memeriksanya di halaman Verify dengan kunci publik, tanpa perlu menghubungi penanda tangan.</p>
       </div>
-      <div class="bagan"><svg class="bagan-lebar" viewBox="0 0 1120 510" role="img" aria-labelledby="bagan-j bagan-d"><title id="bagan-j">Diagram alur Segel</title><desc id="bagan-d">Penanda tangan membuat kunci, menghitung hash dokumen, lalu menyegel dengan kunci privat dan mengirim bukti. Penerima memeriksa apakah P(sigma) sama dengan t aksen. Jika tidak, dokumen ditolak. Jika ya, ia memeriksa apakah SHA-256 dokumen sama. Jika tidak, ditolak. Jika ya, dokumen sah dan sidik jari kunci dicocokkan.</desc><defs><marker id="ujung" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" class="mata"/></marker><marker id="ujung-tolak" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" class="mata-tolak"/></marker></defs><text class="label jalur" x="40" y="36" text-anchor="start">PENANDA TANGAN</text><text class="label jalur" x="40" y="214" text-anchor="start">PENERIMA</text><g class="simpul "><rect x="40" y="56" width="210" height="80" rx="12"/><text class="no" x="58" y="78">01</text><text class="judul" x="58" y="102">Buat kunci</text><text class="sub" x="58" y="120">KeyGen → (sk, pk)</text></g><g class="simpul "><rect x="310" y="56" width="210" height="80" rx="12"/><text class="no" x="328" y="78">02</text><text class="judul" x="328" y="102">Hash dokumen</text><text class="sub" x="328" y="120">t = H(manifest)</text></g><g class="simpul inti"><rect x="580" y="56" width="210" height="80" rx="12"/><text class="no" x="598" y="78">03</text><text class="judul" x="598" y="102">Segel</text><text class="sub" x="598" y="120">cari σ: P(σ) = t</text></g><g class="simpul bukti"><rect x="850" y="56" width="230" height="80" rx="12"/><text class="judul" x="868" y="90">Bukti</text><text class="sub" x="868" y="110">file .segel atau QR</text></g><path class="panah " d="M250 96H306" marker-end="url(#ujung)"/><path class="panah " d="M520 96H576" marker-end="url(#ujung)"/><path class="panah " d="M790 96H846" marker-end="url(#ujung)"/><path class="panah " d="M965 136V232" marker-end="url(#ujung)"/><text class="label " x="977" y="190" text-anchor="start">dikirim ke penerima</text><g class="simpul "><rect x="850" y="236" width="230" height="80" rx="12"/><text class="no" x="868" y="258">04</text><text class="judul" x="868" y="282">Terima</text><text class="sub" x="868" y="300">dokumen M′ + bukti</text></g><g class="simpul belah"><polygon points="660,212 775,276 660,340 545,276"/><text class="judul kecil" x="660" y="274" text-anchor="middle">Tanda tangan sah?</text><text class="sub" x="660" y="294" text-anchor="middle">P(σ) = t′</text></g><g class="simpul belah"><polygon points="370,212 485,276 370,340 255,276"/><text class="judul kecil" x="370" y="274" text-anchor="middle">Isi masih utuh?</text><text class="sub" x="370" y="294" text-anchor="middle">SHA-256 sama</text></g><g class="simpul sah"><rect x="40" y="236" width="170" height="80" rx="12"/><text class="judul" x="58" y="270">Sah</text><text class="sub" x="58" y="290">lalu cocokkan</text><text class="sub" x="58" y="306">sidik jari kunci</text></g><path class="panah " d="M850 276H779" marker-end="url(#ujung)"/><path class="panah " d="M545 276H489" marker-end="url(#ujung)"/><text class="label ya" x="517" y="266" text-anchor="middle">ya</text><path class="panah " d="M255 276H214" marker-end="url(#ujung)"/><text class="label ya" x="234" y="266" text-anchor="middle">ya</text><path class="panah tolak" d="M660 340V418" marker-end="url(#ujung-tolak)"/><text class="label tidak" x="670" y="384" text-anchor="start">tidak</text><path class="panah tolak" d="M370 340V418" marker-end="url(#ujung-tolak)"/><text class="label tidak" x="380" y="384" text-anchor="start">tidak</text><g class="simpul tolak"><rect x="255" y="422" width="520" height="72" rx="12"/><text class="judul" x="273" y="456">Ditolak</text><text class="sub" x="273" y="476">bukan dari pemilik kunci, atau isinya diubah</text></g></svg><svg class="bagan-tegak" viewBox="0 0 360 1080" aria-hidden="true"><defs><marker id="ujung-t" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" class="mata"/></marker><marker id="ujung-t-tolak" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" class="mata-tolak"/></marker></defs><text class="label jalur" x="30" y="24" text-anchor="start">PENANDA TANGAN</text><g class="simpul "><rect x="30" y="36" width="240" height="72" rx="12"/><text class="no" x="48" y="58">01</text><text class="judul" x="48" y="82">Buat kunci</text><text class="sub" x="48" y="100">KeyGen → (sk, pk)</text></g><g class="simpul "><rect x="30" y="136" width="240" height="72" rx="12"/><text class="no" x="48" y="158">02</text><text class="judul" x="48" y="182">Hash dokumen</text><text class="sub" x="48" y="200">t = H(manifest)</text></g><g class="simpul inti"><rect x="30" y="236" width="240" height="72" rx="12"/><text class="no" x="48" y="258">03</text><text class="judul" x="48" y="282">Segel</text><text class="sub" x="48" y="300">cari σ: P(σ) = t</text></g><g class="simpul bukti"><rect x="30" y="336" width="240" height="58" rx="12"/><text class="judul" x="48" y="370">Bukti</text><text class="sub" x="48" y="390">file .segel atau QR</text></g><path class="panah " d="M150 108V132" marker-end="url(#ujung-t)"/><path class="panah " d="M150 208V232" marker-end="url(#ujung-t)"/><path class="panah " d="M150 308V332" marker-end="url(#ujung-t)"/><text class="label jalur" x="30" y="440" text-anchor="start">PENERIMA</text><path class="panah " d="M150 394V450" marker-end="url(#ujung-t)"/><text class="label " x="162" y="424" text-anchor="start">dikirim</text><g class="simpul "><rect x="30" y="454" width="240" height="72" rx="12"/><text class="no" x="48" y="476">04</text><text class="judul" x="48" y="500">Terima</text><text class="sub" x="48" y="518">dokumen M′ + bukti</text></g><path class="panah " d="M150 526V552" marker-end="url(#ujung-t)"/><g class="simpul belah"><polygon points="150,554 262,616 150,678 38,616"/><text class="judul kecil" x="150" y="614" text-anchor="middle">Tanda tangan sah?</text><text class="sub" x="150" y="634" text-anchor="middle">P(σ) = t′</text></g><path class="panah " d="M150 678V720" marker-end="url(#ujung-t)"/><text class="label ya" x="160" y="704" text-anchor="start">ya</text><g class="simpul belah"><polygon points="150,722 262,784 150,846 38,784"/><text class="judul kecil" x="150" y="782" text-anchor="middle">Isi masih utuh?</text><text class="sub" x="150" y="802" text-anchor="middle">SHA-256 sama</text></g><path class="panah " d="M150 846V884" marker-end="url(#ujung-t)"/><text class="label ya" x="160" y="870" text-anchor="start">ya</text><g class="simpul sah"><rect x="30" y="888" width="240" height="72" rx="12"/><text class="judul" x="48" y="922">Sah</text><text class="sub" x="48" y="942">lalu cocokkan sidik</text><text class="sub" x="48" y="958">jari kunci</text></g><path class="panah tolak" d="M262 616H330V1032"/><path class="panah tolak" d="M262 784H330"/><path class="panah tolak" d="M330 1032H276" marker-end="url(#ujung-t-tolak)"/><text class="label tidak" x="272" y="606" text-anchor="start">tidak</text><text class="label tidak" x="272" y="774" text-anchor="start">tidak</text><g class="simpul tolak"><rect x="30" y="996" width="240" height="72" rx="12"/><text class="judul" x="48" y="1030">Ditolak</text><text class="sub" x="48" y="1050">isi diubah atau</text><text class="sub" x="48" y="1066">kunci lain</text></g></svg></div>
+      <div class="bagan alur">
+        <p class="alur-peran">Penanda tangan</p>
+        <ol class="alur-baris">
+          <li class="alur-langkah"><span class="no">01</span><h3>Buat kunci</h3><code>KeyGen(λ) → (pk, sk)</code></li>
+          <li class="alur-langkah"><span class="no">02</span><h3>Hash dokumen</h3><code>t = Hash(manifest)</code></li>
+          <li class="alur-langkah inti"><svg class="cap-mini" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="15"/><circle class="dalam" cx="16" cy="16" r="8.6"/><circle class="pusat" cx="16" cy="16" r="4.3"/></svg><span class="no">03</span><h3>Segel</h3><code>cari σ: P(σ) = t</code></li>
+          <li class="alur-langkah bukti">
+            <div class="slip"><svg class="cap-mini" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="15"/><circle class="dalam" cx="16" cy="16" r="8.6"/><circle class="pusat" cx="16" cy="16" r="4.3"/></svg><div><h3>Bukti</h3><code>DOCX/PDF bertanda tangan, paket .json, atau QR</code></div></div>
+          </li>
+        </ol>
+
+        <p class="alur-kirim"><span>dikirim ke penerima ↓</span></p>
+
+        <p class="alur-peran">Penerima</p>
+        <ol class="alur-baris" start="4">
+          <li class="alur-langkah"><span class="no">04</span><h3>Terima</h3><code>dokumen M′ + bukti</code></li>
+          <li class="alur-langkah gerbang"><span class="no">05</span><h3>Tanda tangan sah?</h3><code>t′ = P(σ), cek t′ = t</code><p class="cabang"><span class="ya">ya →</span><span class="tidak">tidak ↓</span></p></li>
+          <li class="alur-langkah gerbang"><span class="no">06</span><h3>Isi masih utuh?</h3><code>SHA-256 sama</code><p class="cabang"><span class="ya">ya →</span><span class="tidak">tidak ↓</span></p></li>
+          <li class="alur-langkah sah"><svg class="no centang" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg><h3>Sah</h3><code>lalu cocokkan sidik jari kunci</code></li>
+          <li class="alur-tolak"><strong>Ditolak</strong><span>bukan dari pemilik kunci, atau isinya diubah</span></li>
+        </ol>
+      </div>
     </div>
   </section>
 
@@ -94,15 +116,15 @@
         <h2>Yang sering <em>ditanyakan</em></h2>
       </div>
       <div class="tanya">
-        <details><summary>Kenapa tidak memakai RSA saja?</summary><p>RSA bisa dipecahkan algoritma Shor jika komputer kuantum berskala besar tersedia. Dokumen seperti ijazah perlu bisa diperiksa puluhan tahun, jadi Segel memakai UOV, yang bertumpu pada sistem persamaan kuadratik multivariat.</p></details>
-        <details><summary>Apakah dokumen saya diunggah ke server?</summary><p>Tidak. File dibaca dan di-hash di browser Anda. Yang ditandatangani hanya sidik jari SHA-256 dokumen, bersama nama penanda tangan dan waktunya.</p></details>
+        <details><summary>Kenapa tidak memakai RSA atau ECC saja?</summary><p>Keduanya bisa dipecahkan algoritma Shor jika komputer kuantum berskala besar tersedia. Dokumen seperti ijazah perlu bisa diperiksa puluhan tahun, jadi Segel memakai UOV, yang bertumpu pada sistem persamaan kuadratik multivariat.</p></details>
+        <details><summary>Apa yang sebenarnya ditandatangani?</summary><p>Sidik jari SHA-256 dokumen, nama penanda tangan, dan waktunya. Ketiganya disusun menjadi manifest, lalu σ dicari supaya P(σ) = Hash(manifest).</p></details>
         <details><summary>Apa bedanya dengan gambar tanda tangan di PDF?</summary><p>Gambar tanda tangan sama untuk semua dokumen, jadi bisa disalin ke surat lain. σ dari Segel adalah solusi persamaan untuk hash satu dokumen. Ubah satu byte, dan P(σ) tidak lagi sama dengan hash dokumen itu.</p></details>
         <details><summary>Bagaimana penerima tahu kunci publik itu milik penanda tangan?</summary><p>Matematika hanya membuktikan bahwa dokumen ditandatangani oleh pemegang kunci privat. Nama penanda tangan di bukti hanyalah klaim. Penerima perlu mencocokkan sidik jari kunci publik dengan sumber yang ia percaya, misalnya situs resmi instansi penanda tangan, bukan dengan dokumen yang sedang diperiksa.</p></details>
         <details><summary>Apa yang terjadi kalau kunci privat bocor?</summary><p>Siapa pun yang memegangnya bisa menandatangani atas nama Anda. Buat kunci baru dan umumkan sidik jarinya. Prototipe ini belum punya daftar pencabutan kunci.</p></details>
         <details><summary>Kenapa QR tidak memuat kunci publik?</summary><p>Kunci publik UOV tingkat 1 berukuran 412.160 byte, jauh di atas kapasitas QR. QR hanya memuat manifest dan σ (96 byte), lalu kunci publik dimuat dari file terpisah.</p></details>
         <details><summary>Apa itu oil dan vinegar?</summary><p>Keduanya kelompok variabel di peta rahasia F. Vinegar dipilih acak. Karena F tidak punya suku oil × oil, setelah vinegar diisi persamaannya menjadi linear terhadap oil, sehingga oil bisa dihitung.</p></details>
         <details><summary>Parameter apa yang dipakai?</summary><p>GF(16), n = 160 variabel, v = 96 vinegar, m = 64 persamaan. Ini set parameter tingkat 1 dari spesifikasi UOV yang diajukan ke NIST.</p></details>
-        <details><summary>Apakah Segel bisa dipakai untuk dokumen resmi?</summary><p>Belum. Ini prototipe riset untuk mata kuliah Pemodelan Matematika. Implementasinya belum diaudit dan format kuncinya tidak sama dengan pustaka standar seperti liboqs.</p></details>
+        <details><summary>Apakah Segel bisa dipakai untuk dokumen resmi?</summary><p>Belum. Ini prototipe untuk mata kuliah Pemodelan Matematika. Kodenya belum diperiksa ahli keamanan independen, dan format kuncinya berbeda dari pustaka standar seperti liboqs.</p></details>
       </div>
     </div>
   </section>
@@ -110,10 +132,10 @@
   <section class="penutup">
     <div class="wadah">
       <h2>Segel dokumen <em>pertama Anda.</em></h2>
-      <p class="pengantar">Buat kunci, pilih file, lalu bagikan file .segel atau QR-nya. Semuanya selesai di halaman ini.</p>
+      <p class="pengantar">Tulis nama, pilih dokumen, lalu bagikan dokumen bertanda tangan, atau dokumen asli bersama paket tanda tangannya (.json).</p>
       <div class="baris-tombol">
-        <a href="tandatangani.html" class="tombol utama besar">Mulai menyegel</a>
-        <a href="verifikasi.html" class="tombol besar">Periksa dokumen</a>
+        <a href="tandatangani/" class="tombol utama besar">Mulai menyegel</a>
+        <a href="verifikasi/" class="tombol besar">Periksa dokumen</a>
       </div>
     </div>
   </section>
@@ -159,10 +181,12 @@ $('surat').oninput = () => {
     const ini = ++giliran, r = await rpc('verify', { text: $('surat').value, sig });
     if (ini !== giliran) return;
     if (r.res) { $('status').className = 'chip-status utuh'; $('status').disabled = true; $('status-judul').textContent = 'Tersegel'; $('status-rinci').textContent = 'P(σ) = t · isi sama dengan yang disegel'; $('kartu-status').textContent = 'Tersegel · isi utuh'; segel.atur(null, 'utuh-tenang'); }
-    else keadaan('retak', 'Segel ulang', 'P(σ) ≠ H(dokumen) · isinya berubah, jadi tanda tangan lama tidak berlaku');
+    else keadaan('retak', 'Segel ulang', 'P(σ) ≠ Hash(M) · isinya berubah, jadi tanda tangan lama tidak berlaku');
   }, 200);
 };
 $('status').onclick = segelkan;
+// Bawa isi surat ke eksperimen Cara kerja lewat sessionStorage, bukan lewat URL.
+$('ke-cara').onclick = () => { try { sessionStorage.setItem('segel-surat', $('surat').value); } catch {} };
 
 await rpc('keygen');
 await segelkan();

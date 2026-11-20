@@ -8,7 +8,7 @@ for (let round = 0; round < 300; round++) {
   for (const U of keys.F) for (let i = 0; i < N; i++) for (let j = i; j < N; j++) if (isOil(i) && isOil(j)) assert.equal(U[i][j], 0);
   assert.deepEqual(apply(keys.T, apply(keys.Tinv, [1, 2, 3, 4, 5, 6])), [1, 2, 3, 4, 5, 6]);
 
-  const msg = 'SK Dekan No. ' + round, { t } = await hashToField(msg);
+  const msg = 'Surat Alice No. ' + round, { t } = await hashToField(msg);
   const s = sign(keys, t);
   retries += s.attempts.length - 1;
   assert.deepEqual(keys.F.map(U => evalQuad(U, s.u)), t, 'F(u) = t');

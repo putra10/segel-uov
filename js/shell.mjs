@@ -1,5 +1,5 @@
 // Kepala, kaki, dan tema yang sama di setiap halaman.
-import { teksturLak } from './titik.mjs';
+import { teksturLak, guilloche } from './titik.mjs';
 
 // σ sebagai 160 batang: satu batang per elemen GF(16), tinggi = nilainya (0..15).
 export function batang(sig) {
@@ -11,7 +11,8 @@ export function batang(sig) {
   return h;
 }
 export const NAMA = 'Segel';
-const TAUTAN = [['tandatangani.html', 'Tanda tangani'], ['verifikasi.html', 'Verifikasi'], ['cara-kerja.html', 'Cara kerja']];
+const BERANDA = new URL('../', import.meta.url);
+const TAUTAN = [['tandatangani/', 'Sign'], ['verifikasi/', 'Verify'], ['cara-kerja/', 'Cara kerja'], ['about/', 'About Us']];
 
 export const LOGO = `<svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" style="fill:oklch(47% 0.165 22)"/><circle cx="16" cy="16" r="8.6" fill="none" style="stroke:#fff" stroke-width="1.5" stroke-dasharray="2.1 1.7"/><circle cx="16" cy="16" r="4.3" style="fill:#fff"/></svg>`;
 
@@ -33,31 +34,38 @@ function pasangTema(t) {
 }
 
 export function pasangShell() {
-  const kini = location.pathname.split('/').pop() || 'index.html';
-  const menu = TAUTAN.map(([h, n]) => `<a href="${h}"${kini === h ? ' aria-current="page"' : ''}>${n}</a>`).join('');
+  const kini = location.pathname.replace(/\/index\.html$/, '/');
+  const tautan = ([rute, nama]) => {
+    const { pathname } = new URL(rute, BERANDA);
+    return `<a href="${pathname}"${kini === pathname ? ' aria-current="page"' : ''}>${nama}</a>`;
+  };
+  const menu = TAUTAN.map(tautan).join('');
+  const semua = tautan(['', 'Beranda']) + menu;
   document.body.insertAdjacentHTML('afterbegin', `
     <header class="kepala"><div class="wadah">
-      <a href="index.html" class="logo" aria-label="${NAMA}, ke beranda">${LOGO}${NAMA}<span>UOV</span></a>
+      <a href="${BERANDA.pathname}" class="logo" aria-label="${NAMA}, ke beranda">${LOGO}${NAMA}<span>UOV</span></a>
       <nav class="menu" aria-label="Menu utama">${menu}</nav>
       <div class="tema" role="group" aria-label="Tema"><button data-tema="terang" aria-label="Tema terang">${ikonTerang}</button><button data-tema="gelap" aria-label="Tema gelap">${ikonGelap}</button></div>
     </div></header>
-    <nav class="menu-bawah" aria-label="Menu">${[['index.html', 'Beranda'], ...TAUTAN].map(([h, n]) => `<a href="${h}"${kini === h ? ' aria-current="page"' : ''}>${n}</a>`).join('')}</nav>`);
-  const luar = (href, teks) => `<a href="${href}" target="_blank" rel="noopener">${teks} ↗</a>`;
+    <nav class="menu-bawah" aria-label="Menu">${semua}</nav>`);
   document.body.insertAdjacentHTML('beforeend', `
     <footer class="kaki"><div class="wadah">
-      <div class="cetak" style="--kolom:4">
-        <div><span class="merek">${LOGO}${NAMA}<span>UOV</span></span><p class="slogan">Tanda tangan yang retak<br><em>kalau isinya diubah.</em></p></div>
-        <div><h4>Halaman</h4><a href="index.html">Beranda</a>${TAUTAN.map(([h, n]) => `<a href="${h}">${n}</a>`).join('')}</div>
-        <div><h4>Proyek</h4><span>Kelompok 3B</span><span>Pemodelan Matematika</span><span>Departemen Matematika FMIPA UI</span><span>2026</span></div>
-        <div><h4>Rujukan</h4>${luar('https://csrc.nist.gov/csrc/media/Projects/pqc-dig-sig/documents/round-2/spec-files/uov-spec-round2-web.pdf', 'Spesifikasi UOV v2.0')}${luar('https://doi.org/10.1007/3-540-48910-X_15', 'Kipnis, Patarin &amp; Goubin (1999)')}${luar('https://doi.org/10.6028/NIST.IR.8610', 'NIST IR 8610')}</div>
+      <div class="kaki-atas">
+        <a class="merek" href="${BERANDA.pathname}" aria-label="Segel, ke beranda">${LOGO}${NAMA}<span>UOV</span></a>
+        <nav aria-label="Navigasi kaki halaman">${semua}</nav>
       </div>
-      <div class="kaki-bawah">
-        <span>Prototipe riset. Implementasi UOV ini belum diaudit, jadi jangan dipakai untuk dokumen resmi.</span>
-        <span>Parameter UOV tingkat 1 NIST · berjalan di browser</span>
+      <div class="kaki-isi">
+        <p class="slogan">Tanda tangan yang retak<br><em>kalau isinya diubah.</em></p>
+        <div><h4>Proyek</h4><span class="judul-proyek">Autentikasi Suatu Tanda Tangan Digital</span><span>Pemodelan Matematika · Kelompok 3B</span><span>Dosen fasilitator: Muhammad Imran, Ph.D.</span><span>Departemen Matematika FMIPA UI</span><span>2026</span></div>
       </div>
     </div></footer>`);
   // Tekstur lak dipasang di akar supaya blok merah mana pun bisa memakainya.
   document.documentElement.style.setProperty('--tekstur', `url(${teksturLak()})`);
+  // Halaman selain beranda memakai latar guilloché, bukan tekstur lak penuh.
+  if (!document.body.classList.contains('beranda')) {
+    const p = location.pathname, varian = p.includes('/verifikasi') ? 'spirograf' : p.includes('/cara-kerja') ? 'lissajous' : p.includes('/about') ? 'mawar' : 'roset';
+    document.documentElement.style.setProperty('--guilloche', `url("${guilloche(varian)}")`);
+  }
 
   // Lewati ke konten.
   const utama = document.querySelector('main');
@@ -67,7 +75,7 @@ export function pasangShell() {
   // Bagian di bawah layar naik dan memudar masuk sekali. Yang sudah terlihat saat dimuat tidak disembunyikan.
   // Yang sudah dilewati (lompat lewat tautan, gulir cepat) ikut dimunculkan, jadi tak ada bagian yang tertinggal tersembunyi.
   if (!diam) {
-    let tunggu = [...document.querySelectorAll('.judul-tengah, .rumus-besar, .cetak, .bagan, .tanya, .penutup .wadah, .langkah-demo, .kaki .cetak')]
+    let tunggu = [...document.querySelectorAll('.judul-tengah, .rumus-besar, .cetak, .bagan, .tanya, .penutup .wadah, .langkah-demo')]
       .filter(el => el.getBoundingClientRect().top > innerHeight * 0.9);
     tunggu.forEach(el => el.classList.add('akan-muncul'));
     let dijadwal = false;
@@ -107,6 +115,18 @@ export function unduh(nama, isi, tipe = 'application/octet-stream') {
   const u = URL.createObjectURL(new Blob([isi], { type: tipe })), a = document.createElement('a');
   a.href = u; a.download = nama; a.click(); setTimeout(() => URL.revokeObjectURL(u), 10000);
 }
+// QR hitam di atas putih dengan zona tenang 4 modul, siap dicetak atau ditempel.
+export async function qrPng(teks, sel = 8, tepi = 4) {
+  const q = qrcode(0, 'L'); q.addData(teks); q.make();
+  const n = q.getModuleCount(), w = (n + tepi * 2) * sel, c = document.createElement('canvas');
+  c.width = c.height = w;
+  const g = c.getContext('2d');
+  g.fillStyle = '#fff'; g.fillRect(0, 0, w, w); g.fillStyle = '#000';
+  for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) if (q.isDark(y, x)) g.fillRect((x + tepi) * sel, (y + tepi) * sel, sel, sel);
+  const blob = await new Promise(r => c.toBlob(r, 'image/png'));
+  return new Uint8Array(await blob.arrayBuffer());
+}
+
 export const ekstensi = nama => (nama.split('.').pop() || 'file').slice(0, 4);
 // Zona jatuh: klik atau seret berkas. cb(file) dipanggil saat berkas dipilih.
 export function zonaJatuh(el, cb) {

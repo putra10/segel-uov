@@ -1,0 +1,1000 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cara kerja · Segel</title>
+<script>try{var t=localStorage.getItem('segel-tema');if(t==='gelap'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.classList.add('gelap')}catch(e){}</script>
+<meta name="description" content="Skema Unbalanced Oil and Vinegar dengan parameter kecil di F7, supaya setiap angka bisa diikuti dari KeyGen sampai Verify.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Segel">
+<meta property="og:title" content="Cara kerja UOV · Segel">
+<meta property="og:description" content="Skema Unbalanced Oil and Vinegar dengan parameter kecil di F7, supaya setiap angka bisa diikuti dari KeyGen sampai Verify.">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#7a2620">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/segel.css">
+<link rel="stylesheet" href="cara-kerja.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23a3302c'/%3E%3Ccircle cx='16' cy='16' r='4.3' fill='%23fff'/%3E%3Ccircle cx='16' cy='16' r='8.6' fill='none' stroke='%23fff' stroke-width='1.5' stroke-dasharray='2.1 1.7'/%3E%3C/svg%3E">
+</head>
+<body class="lak panduan">
+<main id="isi">
+
+  <!-- ==================== 0. HERO MONOGRAF · DUNIA LAK ==================== -->
+  <section class="hero hero-monograf" aria-labelledby="judul-utama">
+    <div class="hero-latar" aria-hidden="true"></div>
+    <div class="wadah">
+      <div class="folio-atas">
+        <span class="folio-kiri">Monograf teknis · Unbalanced Oil and Vinegar</span>
+        <span class="folio-kanan">q = 7 · n = 6 · v = 4 · m = 2</span>
+      </div>
+
+      <div class="hero-monograf-grid">
+        <div>
+          <h1 id="judul-utama">Matematika di balik <em>satu segel yang retak.</em></h1>
+          <p class="pengantar">Skema UOV yang sama dengan halaman utama, diperkecil ke medan 𝔽₇ dengan enam variabel. Semua angka di halaman ini dihitung sungguhan, jadi ubah suratnya atau acak kuncinya dan lihat hasilnya ikut berubah.</p>
+
+          <div class="legenda-hero" aria-label="Legenda warna variabel">
+            <span class="legenda-item v"><i class="dot" aria-hidden="true"></i>x₁…x₄ <small>Vinegar · dipilih acak</small></span>
+            <span class="legenda-item o"><i class="dot" aria-hidden="true"></i>x₅, x₆ <small>Oil · diselesaikan linear</small></span>
+          </div>
+
+          <div class="baris-tombol">
+            <a class="tombol terang" href="#eksperimen">Uji surat langsung <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14m-6-6 6 6 6-6"/></svg></a>
+            <button class="tombol garis-terang" id="regen-hero" type="button">Acak kunci baru</button>
+          </div>
+        </div>
+
+        <aside class="instrumen-hero sudut" aria-label="Status langsung simulasi UOV">
+          <div class="instrumen-kepala">
+            <span class="status-lampu" id="hero-lampu"><i class="titik" aria-hidden="true"></i><span id="hero-status-teks">Memeriksa…</span></span>
+          </div>
+
+          <div class="cincin-uov">
+            <svg class="cincin-svg" id="cincin-svg" viewBox="0 0 180 180" role="img" aria-label="Diagram enam komponen tanda tangan sigma mengelilingi inti verifikasi">
+              <circle class="orbit" cx="90" cy="90" r="56"/>
+              <circle class="inti-cincin" cx="90" cy="90" r="29"/>
+              <circle class="cincin-dalam" cx="90" cy="90" r="22"/>
+              <path class="centang-inti" d="M79 90.5l7.5 7.5 14.5-15"/>
+              <path class="garis-retak" d="M72 73l14 11-6 8 15 6-5 11"/>
+              <g id="simpul-cincin"></g>
+            </svg>
+            <dl class="telemetri-nilai">
+              <div class="telemetri-baris">
+                <dt>Tanda tangan <span class="math">σ ∈ 𝔽₇⁶</span></dt>
+                <dd id="hero-sigma">(·, ·, ·, ·, ·, ·)</dd>
+              </div>
+              <div class="telemetri-baris">
+                <dt><span class="math">t′ = P(σ)</span> terhadap <span class="math">t = Hash(M′)</span></dt>
+                <dd class="telemetri-banding"><span id="hero-tp">(·, ·)</span><span class="rel" id="hero-rel">=</span><span id="hero-tr">(·, ·)</span></dd>
+              </div>
+            </dl>
+          </div>
+
+          <div class="instrumen-kaki">
+            <span>P = F ∘ T</span>
+            <span class="tabular">49 target · 117.649 kandidat σ</span>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ==================== 1. REL BAB LENGKET ==================== -->
+  <nav class="rel-bab" aria-label="Daftar bab monograf">
+    <div class="wadah">
+      <div class="nav-segmen" id="nav-segmen">
+        <a href="#eksperimen" aria-current="location"><em>I.</em> Eksperimen</a>
+        <a href="#keygen"><em>II.</em> Kunci</a>
+        <a href="#hash"><em>III.</em> Hash</a>
+        <a href="#sign"><em>IV.</em> Tanda Tangan</a>
+        <a href="#aman"><em>V.</em> Keamanan</a>
+      </div>
+      <a class="rel-status" id="rel-status" href="#eksperimen" aria-live="polite">
+        <i class="titik" aria-hidden="true"></i>
+        <span>P(σ) <b id="rel-tp">(·, ·)</b> <span id="rel-op">=</span> <b id="rel-tr">(·, ·)</b> Hash(M′)</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- ==================== BAB I · EKSPERIMEN LANGSUNG ==================== -->
+  <section class="bab-monograf" id="eksperimen" aria-labelledby="judul-surat">
+    <div class="wadah">
+      <div class="bab-garis">
+        <span class="bab-romawi">I.</span>
+        <span class="bab-label">Eksperimen langsung <i class="titik-pemisah" aria-hidden="true"></i> Verifikasi</span>
+        <span class="bab-folio">001 / 005</span>
+      </div>
+
+      <header class="bab-kepala">
+        <h2 id="judul-surat">Satu surat, <em>dua versi.</em></h2>
+        <p>Pengirim menandatangani naskah asli satu kali dan menghasilkan vektor σ. Penerima hanya memeriksa apakah P(σ) sama dengan hash salinan yang ia terima, tanpa pernah melihat kunci privat.</p>
+      </header>
+
+      <div class="lembar-surat sudut">
+        <div class="surat-kolom asli">
+          <div>
+            <div class="surat-meta">
+              <h3>Naskah asli pengirim</h3>
+              <span class="lencana-diff" id="badge-asli">Tersegel utuh</span>
+            </div>
+            <p id="asli" style="margin-top:20px"></p>
+          </div>
+          <div class="surat-kaki">
+            <div>
+              <span class="sigma-label">Tanda tangan <span class="math">σ ∈ 𝔽₇⁶</span></span>
+              <div class="sigma-deret" id="nilai-sigma" aria-label="Komponen tanda tangan sigma"></div>
+            </div>
+            <a class="tautan-halus" href="#hash">Sunting naskah sumber M ↓</a>
+          </div>
+        </div>
+
+        <div class="surat-kolom salinan">
+          <div>
+            <div class="surat-meta">
+              <h3><label for="recv">Salinan yang diterima</label></h3>
+              <span class="lencana-diff" id="badge-salinan">Cocok dengan asli</span>
+            </div>
+            <textarea id="recv" rows="2" spellcheck="false" style="margin-top:20px" aria-label="Salinan surat penerima yang dapat disunting"></textarea>
+          </div>
+          <div class="surat-kaki">
+            <div class="contoh-ubah" aria-label="Contoh perubahan cepat">
+              <span>Uji cepat</span>
+              <button class="chip-uji" type="button" data-uji="nominal">Rp5 → Rp6</button>
+              <button class="chip-uji" type="button" data-uji="nama">Alice → Bob</button>
+              <button class="chip-uji" type="button" data-uji="spasi">+ spasi</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pita-putusan">
+        <div class="pita-aksi">
+          <button class="tombol utama kecil" id="restore" type="button">Pulihkan surat</button>
+          <button class="tombol kecil" id="tamper" type="button">Ubah satu karakter</button>
+        </div>
+
+        <div class="putusan-narasi" id="verdict" role="status" aria-live="polite"></div>
+
+        <div class="banding-besar" id="banding-besar">
+          <div><strong id="tp">(·, ·)</strong><small>Dari tanda tangan · P(σ)</small></div>
+          <span class="rel" id="relasi" aria-label="sama dengan">=</span>
+          <div><strong id="tr">(·, ·)</strong><small>Dari salinan · t = Hash(M′)</small></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== BAB II · PEMBANGKITAN KUNCI ==================== -->
+  <section class="bab-monograf bab-reveal" id="keygen" aria-labelledby="judul-keygen">
+    <div class="wadah">
+      <div class="bab-garis">
+        <span class="bab-romawi">II.</span>
+        <span class="bab-label">Pembangkitan kunci <i class="titik-pemisah" aria-hidden="true"></i> KeyGen</span>
+        <span class="bab-folio">002 / 005</span>
+      </div>
+
+      <header class="bab-kepala">
+        <h2 id="judul-keygen">Bagaimana kunci publik <em>dibuat?</em></h2>
+        <div>
+          <p>Kunci privat terdiri dari peta kuadratik F yang sengaja mengosongkan blok oil × oil, ditambah pengacak linear T. Komposisi P = F ∘ T menyembunyikan kekosongan itu sebelum dibagikan ke publik. Jadi sk = (F, T) dan pk = P.</p>
+          <div class="bab-aksi">
+            <button class="tombol kecil" id="regen" type="button">Acak kunci baru</button>
+          </div>
+        </div>
+      </header>
+
+      <div class="kontrol-kunci">
+        <div class="pilih-pers" role="group" aria-label="Pilih persamaan yang ditampilkan">
+          <button type="button" data-eq="0" aria-pressed="true">Persamaan 1 · F₁ &amp; P₁</button>
+          <button type="button" data-eq="1" aria-pressed="false">Persamaan 2 · F₂ &amp; P₂</button>
+        </div>
+        <div class="legenda-baris" aria-label="Keterangan warna matriks">
+          <span><i class="k-v" aria-hidden="true"></i>x₁…x₄ Vinegar</span>
+          <span><i class="k-o" aria-hidden="true"></i>x₅, x₆ Oil</span>
+        </div>
+      </div>
+
+      <div class="kisi-matriks sudut">
+        <article class="sel-matriks">
+          <div>
+            <div class="sel-kepala">
+              <h3 id="judul-matF">F₁ · Peta rahasia</h3>
+              <span class="tag-status rahasia-tag">Rahasia</span>
+            </div>
+            <div class="mat-bungkus" id="matF"></div>
+          </div>
+          <p class="sel-catatan">Tiga sel berarsir di kanan bawah adalah blok <b>oil × oil</b>. Koefisiennya dikunci selalu <b>0</b> agar nanti bisa dilinearkan.</p>
+        </article>
+
+        <article class="sel-matriks tengah-t">
+          <div>
+            <div class="sel-kepala">
+              <h3>T · Pengacak linear</h3>
+              <span class="tag-status rahasia-tag">Rahasia</span>
+            </div>
+            <div class="mat-bungkus" id="matT"></div>
+          </div>
+          <div>
+            <div class="rumus-blok" aria-label="T sama dengan matriks blok I4 A, 0 I2; invers T sama dengan I4 minus A, 0 I2">
+              <span class="blok-eq">T = <span class="kurung-mat"><span>I₄</span><span class="o-teks">A</span><span>0</span><span>I₂</span></span></span>
+              <span class="blok-eq">T⁻¹ = <span class="kurung-mat"><span>I₄</span><span class="o-teks">−A</span><span>0</span><span>I₂</span></span></span>
+            </div>
+            <p class="sel-catatan">Blok <b>A</b> (4 × 2) mencampur variabel oil ke seluruh variabel vinegar dengan invers yang langsung diketahui.</p>
+          </div>
+        </article>
+
+        <article class="sel-matriks kolom-publik">
+          <div>
+            <div class="sel-kepala">
+              <h3 id="judul-matP">P₁ = F₁ ∘ T</h3>
+              <span class="tag-status publik-tag">Publik</span>
+            </div>
+            <div class="mat-bungkus" id="matP"></div>
+          </div>
+          <p class="sel-catatan" id="ooNote"></p>
+        </article>
+      </div>
+
+      <div class="band-polinomial">
+        <div class="kolom-poli">
+          <div class="poli-kepala">
+            <h4 id="judul-polyF">Bentuk polinomial <span class="math">F₁(u)</span></h4>
+            <span class="poli-hitung">0 suku oil × oil</span>
+          </div>
+          <div class="poli-ekspresi" id="polyF"></div>
+        </div>
+        <div class="kolom-poli">
+          <div class="poli-kepala">
+            <h4 id="judul-polyP">Bentuk polinomial <span class="math">P₁(x)</span></h4>
+            <span class="poli-hitung terisi" id="hitung-oo-p"></span>
+          </div>
+          <div class="poli-ekspresi" id="polyP"></div>
+        </div>
+      </div>
+
+      <div class="petunjuk-hover">
+        <span id="info-suku">Arahkan kursor ke sel matriks atau suku polinomial di atas untuk melacak korespondensinya.</span>
+        <span>Semua aritmetika dilakukan mod 7</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== BAB III · RINGKASAN PESAN (HASH) ==================== -->
+  <section class="bab-monograf bab-reveal" id="hash" aria-labelledby="judul-hash">
+    <div class="wadah">
+      <div class="bab-garis">
+        <span class="bab-romawi">III.</span>
+        <span class="bab-label">Ringkasan pesan <i class="titik-pemisah" aria-hidden="true"></i> Hash</span>
+        <span class="bab-folio">003 / 005</span>
+      </div>
+
+      <header class="bab-kepala">
+        <h2 id="judul-hash">Bagaimana surat menjadi <em>dua angka?</em></h2>
+        <p>Dokumen sepanjang apa pun diringkas lewat SHA-256 menjadi 256 bit. Dalam model mainan ini, empat byte pertama dipetakan mod 7 menjadi vektor target t ∈ 𝔽₇². Yang ditandatangani adalah t, bukan M, supaya dokumen sepanjang apa pun cukup diwakili satu vektor pendek, dan perubahan sekecil apa pun pada M mengubah t.</p>
+      </header>
+
+      <div class="hash-alur sudut">
+        <div class="hash-lembar">
+          <div class="hash-lembar-atas">
+            <label class="hash-lembar-label" for="msg">
+              <span>Dokumen sumber <span class="math">M</span></span>
+              <span class="byte-pil tabular" id="panjang-msg">0 byte</span>
+            </label>
+            <div class="hash-sinkron">
+              <span class="sinkron-tanda" id="status-sinkron">Tersinkron dengan Bab I</span>
+              <button class="tombol kecil" id="sign-dari-hash" type="button">Segel naskah M ini</button>
+            </div>
+          </div>
+          <textarea id="msg" rows="2" spellcheck="false">Beasiswa untuk Alice disetujui sebesar Rp5.000.000.</textarea>
+        </div>
+
+        <div class="hash-register-blok">
+          <div class="register-kepala">
+            <span>Register <span class="math">SHA-256(M)</span> · 32 byte dalam 16 pasangan heksadesimal</span>
+            <small>4 byte pertama dipetakan ke 𝔽₇²</small>
+          </div>
+          <div class="sha-register" id="hex" aria-label="Nilai hash SHA-256 dalam 16 blok 2-byte"></div>
+        </div>
+
+        <div class="hash-reduksi">
+          <div class="reduksi-kol">
+            <div class="reduksi-meta">
+              <span class="lbl">Byte 0–1 → <span class="math">t₁</span></span>
+              <span class="reduksi-chip c1" id="red-1-hex">0x0000</span>
+            </div>
+            <div class="reduksi-pers">
+              <span class="hitung" id="red-1-hitung">0 mod 7</span>
+              <strong class="hasil-angka" id="red-1-hasil">0</strong>
+            </div>
+          </div>
+
+          <div class="reduksi-kol">
+            <div class="reduksi-meta">
+              <span class="lbl">Byte 2–3 → <span class="math">t₂</span></span>
+              <span class="reduksi-chip c2" id="red-2-hex">0x0000</span>
+            </div>
+            <div class="reduksi-pers">
+              <span class="hitung" id="red-2-hitung">0 mod 7</span>
+              <strong class="hasil-angka" id="red-2-hasil">0</strong>
+            </div>
+          </div>
+
+          <div class="reduksi-kol inti">
+            <div class="reduksi-meta">
+              <span class="lbl">Vektor target · <span class="math">t = Hash(M)</span></span>
+              <span class="hitung" style="font-size:11.5px">𝔽₇²</span>
+            </div>
+            <div class="reduksi-pers">
+              <span class="hitung">Hash : {0, 1}* → 𝔽₇²</span>
+              <strong class="hasil-angka" id="t">(·, ·)</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== BAB IV · PENANDATANGANAN (SIGN) ==================== -->
+  <section class="bab-monograf bab-reveal" id="sign" aria-labelledby="judul-sign">
+    <div class="wadah">
+      <div class="bab-garis">
+        <span class="bab-romawi">IV.</span>
+        <span class="bab-label">Penandatanganan <i class="titik-pemisah" aria-hidden="true"></i> Sign</span>
+        <span class="bab-folio">004 / 005</span>
+      </div>
+
+      <header class="bab-kepala">
+        <h2 id="judul-sign">Dari mana tanda tangan σ <em>berasal?</em></h2>
+        <div>
+          <p>Isi empat variabel vinegar secara acak. Karena F tidak punya suku oil × oil, sistem kuadratiknya menjadi dua persamaan linear dengan dua variabel oil, lalu σ = T⁻¹(u).</p>
+          <div class="bab-aksi">
+            <button class="tombol utama kecil" id="doSign" type="button">Acak vinegar &amp; tanda tangani ulang</button>
+            <span class="sign-meta-pil" id="sign-meta"></span>
+          </div>
+        </div>
+      </header>
+
+      <ol class="buku-sign sudut" id="signFlow"></ol>
+    </div>
+  </section>
+
+  <!-- ==================== BAB V · KEAMANAN (INSET LAK GELAP) ==================== -->
+  <section class="bab-keamanan bab-reveal" id="aman" aria-labelledby="judul-aman">
+    <div class="wadah">
+      <div class="panggung-keamanan">
+        <div class="bab-garis">
+          <span class="bab-romawi">V.</span>
+          <span class="bab-label">Analisis keamanan <i class="titik-pemisah" aria-hidden="true"></i> Masalah MQ</span>
+          <span class="bab-folio">005 / 005</span>
+        </div>
+
+        <header class="keamanan-kepala">
+          <div class="keamanan-kepala-teks">
+            <h2 id="judul-aman">Apa yang <em>tetap rahasia?</em></h2>
+            <p>Publik melihat P, M, dan σ. Keamanan UOV diyakini bertumpu pada sulitnya menentukan F dan T hanya dari P. Tanpa keduanya, mencari σ berarti menyelesaikan sistem kuadratik multivariat yang tampak umum (masalah MQ), yang diyakini sulit, juga bagi komputer kuantum.</p>
+          </div>
+          <div class="lensa-kontrol" role="group" aria-label="Pilih sudut pandang sistem persamaan">
+            <button type="button" data-lensa="banding" aria-pressed="true">Bandingkan</button>
+            <button type="button" data-lensa="penyerang" aria-pressed="false">Hanya P (Penyerang)</button>
+            <button type="button" data-lensa="rahasia" aria-pressed="false">Struktur F (Rahasia)</button>
+          </div>
+        </header>
+
+        <div class="lensa-bentang" id="lensa-bentang" data-mode="banding">
+          <div class="lensa-kolom publik-sisi">
+            <div class="lensa-subkepala">
+              <h3>Yang dilihat penyerang</h3>
+              <span class="lensa-tag">Publik · P₁, P₂</span>
+            </div>
+            <p class="ket">Semua suku tercampur rata tanpa warna. Penyerang tidak tahu variabel mana yang vinegar dan mana yang oil.</p>
+            <div class="poli-gelap" id="atkP"></div>
+          </div>
+          <div class="lensa-kolom rahasia-sisi">
+            <div class="lensa-subkepala">
+              <h3>Yang tetap rahasia</h3>
+              <span class="lensa-tag">Privat · F₁, F₂</span>
+            </div>
+            <p class="ket">Hanya pemegang kunci privat yang tahu struktur tanpa suku oil × oil di balik transformasi T.</p>
+            <div class="poli-gelap" id="atkF"></div>
+          </div>
+        </div>
+
+        <div class="skala-kepala">
+          <span>Skala ruang pencarian <span class="math">σ</span></span>
+          <span>Model edukatif vs. NIST Tingkat 1</span>
+        </div>
+
+        <div class="skala-keamanan">
+          <div class="skala-kartu">
+            <div>
+              <span class="skala-eyebrow">Contoh mainan · <span class="math">𝔽₇, n = 6, m = 2</span></span>
+              <div class="angka-monumen">7<sup>6</sup><span class="sama">=</span>117.649</div>
+              <p class="skala-desc">Ruang kandidat σ pada model edukatif ini sangat kecil. Halaman ini sanggup mencari tanda tangan palsu σ* dengan P(σ*) = t hanya dengan mencoba secara acak.</p>
+            </div>
+            <div class="sim-bobol">
+              <div class="sim-baris">
+                <button class="tombol terang kecil" id="btn-bobol" type="button">Coba bobol contoh 𝔽₇ ini</button>
+                <span class="skala-eyebrow" style="color:oklch(95% 0.025 70 / 0.6)">Tanpa memakai F atau T</span>
+              </div>
+              <div class="sim-hasil" id="sim-hasil" aria-live="polite">Klik untuk mencari σ* secara paksa (brute-force) memakai kunci publik P saja.</div>
+            </div>
+          </div>
+
+          <div class="skala-kartu nyata">
+            <div>
+              <span class="skala-eyebrow">Parameter nyata Segel · <span class="math">GF(16), n = 160, m = 64</span></span>
+              <div class="angka-monumen">16<sup>160</sup><span class="sama">≈</span>10<sup>192</sup></div>
+              <p class="skala-desc">Set tingkat 1 NIST (v = 96 vinegar, m = 64 oil). Jumlah kandidatnya jauh melampaui jumlah atom di alam semesta teramati, jadi mencoba satu per satu tidak mungkin.</p>
+            </div>
+
+            <div class="batang-log" aria-label="Perbandingan skala logaritmik">
+              <div class="log-baris">
+                <span>Model 𝔽₇</span>
+                <div class="log-jalur"><div class="log-isi" style="width:4%"></div></div>
+                <span class="log-nilai">10<sup>5</sup></span>
+              </div>
+              <div class="log-baris">
+                <span>Usia semesta (dtk)</span>
+                <div class="log-jalur"><div class="log-isi" style="width:11%"></div></div>
+                <span class="log-nilai">10<sup>17</sup></span>
+              </div>
+              <div class="log-baris">
+                <span>Atom di semesta</span>
+                <div class="log-jalur"><div class="log-isi" style="width:42%"></div></div>
+                <span class="log-nilai">10<sup>80</sup></span>
+              </div>
+              <div class="log-baris utama">
+                <span>Segel (GF(16))</span>
+                <div class="log-jalur"><div class="log-isi" style="width:100%"></div></div>
+                <span class="log-nilai">10<sup>192</sup></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SLOGAN & PENUTUP (KONVERGEN BERANDA) ==================== -->
+  <section class="slogan-besar" aria-label="Inti matematika UOV">
+    <div class="wadah">
+      <p>Enam variabel cukup untuk melihat polanya. <em>Seratus enam puluh variabel cukup untuk melindunginya.</em></p>
+    </div>
+  </section>
+
+  <section class="penutup">
+    <div class="wadah">
+      <span class="alis">Parameter nyata · GF(16) · NIST Tingkat 1</span>
+      <h2>Sekarang coba pada <em>dokumen nyata.</em></h2>
+      <p class="pengantar">Segel memakai skema yang sama, hanya lebih besar: GF(16), 160 variabel, dan 64 persamaan.</p>
+      <div class="baris-tombol">
+        <a href="../tandatangani/" class="tombol utama besar">Segel dokumen Anda <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+        <a href="../verifikasi/" class="tombol besar">Periksa dokumen</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script type="module">
+import { pasangShell } from '../js/shell.mjs';
+import { V, N, keygen, sign, verify, hashToField, isOil, randElem } from '../js/uov-toy.mjs';
+pasangShell();
+
+const $ = id => document.getElementById(id);
+// Surat yang diketik di beranda (lewat tautan "Lihat perhitungan surat ini") menjadi naskah M.
+try {
+  const dariBeranda = sessionStorage.getItem('segel-surat');
+  if (dariBeranda) { $('msg').value = dariBeranda.slice(0, 500); sessionStorage.removeItem('segel-surat'); }
+} catch {}
+const SUB = '₀₁₂₃₄₅₆₇₈₉';
+const sub = n => String(n).split('').map(d => SUB[d]).join('');
+const clsVar = i => isOil(i) ? 'o-teks' : 'v-teks';
+const clsGelap = i => isOil(i) ? 'o-gelap' : 'v-gelap';
+
+let keys, signed = '', sig = null, eqIdx = 0;
+
+// Auto-tinggi untuk textarea tanpa pegangan resize bawaan browser
+function ukurTextarea(el) {
+  el.style.height = 'auto';
+  el.style.height = el.scrollHeight + 'px';
+}
+
+// Bangun simpul cincin 6 variabel di SVG hero
+function renderCincin(sigma, ok) {
+  const g = $('simpul-cincin');
+  const cx = 90, cy = 90, r = 56;
+  let html = '';
+  for (let i = 0; i < N; i++) {
+    const sudut = (-Math.PI / 2) + (i * 2 * Math.PI / N);
+    const x = (cx + r * Math.cos(sudut)).toFixed(1);
+    const y = (cy + r * Math.sin(sudut)).toFixed(1);
+    const lx = (cx + (r + 24) * Math.cos(sudut)).toFixed(1);
+    const ly = (cy + (r + 24) * Math.sin(sudut)).toFixed(1);
+    const tipe = isOil(i) ? 'o' : 'v';
+    html += `<g class="simpul-var ${tipe}"><circle cx="${x}" cy="${y}" r="13"/><text x="${x}" y="${y}">${sigma[i]}</text></g>`;
+    html += `<text class="simpul-lbl" x="${lx}" y="${ly}">σ${sub(i + 1)}</text>`;
+  }
+  g.innerHTML = html;
+  $('cincin-svg').classList.toggle('retak', !ok);
+}
+
+// Render matriks 6x6 dengan atribut data-pair untuk penyorotan silang
+function matHTML(U, { jenis = 'F', full = false } = {}) {
+  const kelasT = jenis === 'T' ? ' blok-t' : '';
+  let h = `<div class="mat-uov${kelasT}"><span></span>`;
+  for (let j = 0; j < N; j++) {
+    const warna = jenis === 'P' ? '' : (isOil(j) ? 'o' : 'v');
+    h += `<span class="hd ${warna}">x${sub(j + 1)}</span>`;
+  }
+  for (let i = 0; i < N; i++) {
+    const warnaRow = jenis === 'P' ? '' : (isOil(i) ? 'o' : 'v');
+    h += `<span class="hd ${warnaRow}">x${sub(i + 1)}</span>`;
+    for (let j = 0; j < N; j++) {
+      const a = U[i][j];
+      if (!full && j < i) {
+        h += '<span class="sel lo" aria-hidden="true">·</span>';
+        continue;
+      }
+      const batas = (jenis === 'T' && j === V - 1 ? ' batas-kanan' : '') + (jenis === 'T' && i === V - 1 ? ' batas-bawah' : '');
+      if (jenis === 'T') {
+        const blok = i < V && j >= V ? ' blok-a' : i === j ? ' blok-id' : a === 0 ? ' z' : '';
+        h += `<span class="sel${blok}${batas}">${a}</span>`;
+      } else {
+        const oo = isOil(i) && isOil(j);
+        const vo = isOil(i) !== isOil(j);
+        let c = '';
+        if (jenis === 'F') c = oo ? 'oo-nol' : vo ? 'vo' : '';
+        if (jenis === 'P') c = oo && a ? 'oo-terisi' : '';
+        const nol = !a && !oo ? ' z' : '';
+        h += `<span class="sel ${c}${nol}" data-mat="${jenis}" data-pair="${i}-${j}" tabindex="0">${a}</span>`;
+      }
+    }
+  }
+  return h + '</div>';
+}
+
+function polyTermsHTML(U, v, { jenis = 'F', gelap = false, warna = true } = {}) {
+  const terms = [];
+  const cFn = gelap ? clsGelap : clsVar;
+  for (let i = 0; i < N; i++) {
+    for (let j = i; j < N; j++) {
+      const a = U[i][j];
+      if (!a) continue;
+      const x = k => warna ? `<span class="${cFn(k)}">${v}${sub(k + 1)}</span>` : `${v}${sub(k + 1)}`;
+      const oo = warna && isOil(i) && isOil(j);
+      const body = `${a === 1 ? '' : a}${i === j ? x(i) + '²' : x(i) + x(j)}`;
+      if (gelap) {
+        terms.push(`<span class="${oo ? 'oo-gelap' : ''}">${body}</span>`);
+      } else {
+        terms.push(`<span class="poli-suku${oo ? ' oo-suku' : ''}" data-mat="${jenis}" data-pair="${i}-${j}">${body}</span>`);
+      }
+    }
+  }
+  const sep = gelap ? ' + ' : '<span class="poli-plus">+</span>';
+  return terms.join(sep);
+}
+
+function polyHTML(U, name, v, opts = {}) {
+  return `<strong>${name}(${v})</strong> = ${polyTermsHTML(U, v, opts)}`;
+}
+
+const countOO = U => {
+  let c = 0;
+  for (let i = V; i < N; i++) for (let j = i; j < N; j++) if (U[i][j]) c++;
+  return c;
+};
+
+function pasangSorotSilang() {
+  const info = $('info-suku');
+  const defaultInfo = 'Arahkan kursor ke sel matriks atau suku polinomial di atas untuk melacak korespondensinya.';
+  const wadah = $('keygen');
+
+  const sorot = (pair, mat) => {
+    wadah.querySelectorAll('.sorot').forEach(el => el.classList.remove('sorot'));
+    if (!pair) { info.textContent = defaultInfo; return; }
+    wadah.querySelectorAll(`[data-pair="${pair}"]`).forEach(el => el.classList.add('sorot'));
+    const [i, j] = pair.split('-').map(Number);
+    const peran = isOil(i) && isOil(j) ? 'oil × oil' : (isOil(i) || isOil(j)) ? 'vinegar × oil' : 'vinegar × vinegar';
+    const fVal = keys.F[eqIdx][i][j], pVal = keys.P[eqIdx][i][j];
+    const suku = i === j ? `x${sub(i + 1)}²` : `x${sub(i + 1)}x${sub(j + 1)}`;
+    const kSub = sub(eqIdx + 1);
+    info.innerHTML = `<strong>${suku}</strong> (${peran}) · koefisien F${kSub} = <strong>${fVal}</strong> → di P${kSub} = <strong>${pVal}</strong>`;
+  };
+
+  wadah.querySelectorAll('[data-pair]').forEach(el => {
+    el.addEventListener('mouseenter', () => sorot(el.dataset.pair, el.dataset.mat));
+    el.addEventListener('focus', () => sorot(el.dataset.pair, el.dataset.mat));
+    el.addEventListener('mouseleave', () => sorot(null));
+    el.addEventListener('blur', () => sorot(null));
+  });
+}
+
+function renderKeys() {
+  const kSub = sub(eqIdx + 1);
+  const Fk = keys.F[eqIdx], Pk = keys.P[eqIdx];
+  const ooCount = countOO(Pk);
+
+  $('judul-matF').textContent = `F${kSub} · Peta rahasia`;
+  $('judul-matP').textContent = `P${kSub} = F${kSub} ∘ T`;
+  $('judul-polyF').innerHTML = `Bentuk polinomial <span class="math">F${kSub}(u)</span>`;
+  $('judul-polyP').innerHTML = `Bentuk polinomial <span class="math">P${kSub}(x)</span>`;
+  $('hitung-oo-p').textContent = `${ooCount} dari 3 suku oil × oil terisi`;
+
+  $('matF').innerHTML = matHTML(Fk, { jenis: 'F' });
+  $('matT').innerHTML = matHTML(keys.T, { jenis: 'T', full: true });
+  $('matP').innerHTML = matHTML(Pk, { jenis: 'P' });
+
+  $('polyF').innerHTML = polyHTML(Fk, 'F' + kSub, 'u', { jenis: 'F', warna: true });
+  $('polyP').innerHTML = polyHTML(Pk, 'P' + kSub, 'x', { jenis: 'P', warna: true });
+  $('ooNote').innerHTML = `Setelah dicampur T, muncul <b>${ooCount}</b> koefisien non-nol pada blok oil × oil (disorot merah), sehingga struktur rahasia F${kSub} tertutup.`;
+
+  // Bab V: polinomial lengkap kedua persamaan dalam baris garis tipis terbuka
+  $('atkP').innerHTML = keys.P.map((U, k) =>
+    `<div class="poli-gelap-baris"><span class="poli-gelap-nama">P${sub(k + 1)}(x)</span><div>${polyTermsHTML(U, 'x', { gelap: true, warna: false })}</div></div>`
+  ).join('');
+  $('atkF').innerHTML = keys.F.map((U, k) =>
+    `<div class="poli-gelap-baris"><span class="poli-gelap-nama">F${sub(k + 1)}(u)</span><div>${polyTermsHTML(U, 'u', { gelap: true, warna: true })}</div></div>`
+  ).join('');
+
+  const totalOO = countOO(keys.P[0]) + countOO(keys.P[1]);
+  $('sim-hasil').textContent = 'Klik untuk mencari σ* secara paksa (brute-force) memakai kunci publik P saja.';
+  pasangSorotSilang();
+}
+
+// Render register 16 blok 2-byte SHA-256 -> F_7^2
+async function renderHash(teks) {
+  const bytes = new TextEncoder().encode(teks);
+  $('panjang-msg').textContent = `${bytes.length} byte`;
+  const { hex, t } = await hashToField(teks);
+  const p1 = hex.slice(0, 4), p2 = hex.slice(4, 8);
+  const v1 = parseInt(p1, 16), v2 = parseInt(p2, 16);
+
+  let selHTML = '';
+  for (let i = 0; i < 16; i++) {
+    const chunk = hex.slice(i * 4, i * 4 + 4);
+    const b0 = String(i * 2).padStart(2, '0'), b1 = String(i * 2 + 1).padStart(2, '0');
+    const cls = i === 0 ? ' ambil-1' : i === 1 ? ' ambil-2' : '';
+    selHTML += `<div class="sha-sel${cls}"><span class="idx">${b0}–${b1}</span><span class="val">${chunk}</span></div>`;
+  }
+  $('hex').innerHTML = selHTML;
+  $('red-1-hex').textContent = `0x${p1}`;
+  $('red-1-hitung').textContent = `${v1.toLocaleString('id-ID')} mod 7`;
+  $('red-1-hasil').textContent = String(t[0]);
+  $('red-2-hex').textContent = `0x${p2}`;
+  $('red-2-hitung').textContent = `${v2.toLocaleString('id-ID')} mod 7`;
+  $('red-2-hasil').textContent = String(t[1]);
+  $('t').textContent = `(${t[0]}, ${t[1]})`;
+
+  const cocok = teks === signed;
+  $('status-sinkron').textContent = cocok ? 'Tersinkron dengan Bab I' : 'Belum disegel ulang';
+  $('status-sinkron').classList.toggle('berbeda', !cocok);
+  $('sign-dari-hash').classList.toggle('utama', !cocok);
+  return { hex, t };
+}
+
+function vektorTiles(arr, mode = 'plain') {
+  return '<span class="vektor-chip">' + arr.map((a, i) => {
+    const sep = mode === 'uo' && i === V ? '<i class="pemisah-vo" aria-hidden="true"></i>' : '';
+    const c = mode === 'v' ? 'v' : mode === 'o' ? 'o' : mode === 'sig' ? 'sig' : mode === 'uo' ? (isOil(i) ? 'o' : 'v') : '';
+    return `${sep}<span class="el ${c}">${a}</span>`;
+  }).join('') + '</span>';
+}
+
+async function doSign() {
+  const msg = $('msg').value;
+  const { t } = await renderHash(msg);
+  sig = sign(keys, t);
+  signed = msg;
+
+  $('nilai-sigma').innerHTML = sig.sigma.map(x => `<span>${x}</span>`).join('');
+  $('hero-sigma').textContent = '(' + sig.sigma.join(', ') + ')';
+
+  const last = sig.attempts.at(-1);
+  const percobaan = sig.attempts.length;
+  $('sign-meta').textContent = `${percobaan} percobaan · det = ${last.det} ≠ 0 (mod 7)`;
+
+  const uSym = i => `<span class="o-teks">u${sub(V + i + 1)}</span>`;
+  const lin = L => L.map((a, i) => a ? (a === 1 ? '' : a) + uSym(i) : '').filter(Boolean).join(' + ') || '0';
+  const retries = sig.attempts.slice(0, -1).map((a, k) =>
+    `<div class="catatan-ulang">Percobaan ${k + 1}: vinegar (${a.vin.join(', ')}) menghasilkan det = 0 (singular). Pilih ulang acak.</div>`
+  ).join('');
+
+  const [[a, b], [c, d]] = last.rows.map(r => r.L);
+
+  $('signFlow').innerHTML = `
+    <li>
+      <span class="sign-no">01</span>
+      <div class="sign-judul"><h3>Ambil target hash</h3><p>Hasil ringkasan SHA-256 mod 7 dari dokumen sumber M.</p></div>
+      <div class="sign-isi">Target persamaan: ${vektorTiles(t)} <span style="color:var(--redup);font-family:var(--huruf-mono);font-size:13px;margin-left:8px">∈ 𝔽₇²</span></div>
+    </li>
+    <li>
+      <span class="sign-no">02</span>
+      <div class="sign-judul"><h3>Pilih vinegar acak</h3><p>Setiap penandatanganan memilih nilai baru, jadi satu dokumen bisa punya banyak σ sah.</p></div>
+      <div class="sign-isi">${retries}<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span style="font-family:var(--huruf-mono);font-size:13.5px;color:var(--redup)">(u₁, u₂, u₃, u₄) =</span> ${vektorTiles(sig.vin, 'v')}</div></div>
+    </li>
+    <li>
+      <span class="sign-no">03</span>
+      <div class="sign-judul"><h3>Substitusi ke F₁ &amp; F₂</h3><p>Suku vinegar × vinegar menjadi konstanta; suku vinegar × oil menjadi koefisien linear.</p></div>
+      <div class="sign-isi">
+        <div class="sistem-linear">
+          ${last.rows.map((r, k) => `<div class="baris-pers"><span class="ruas">F${sub(k + 1)}: ${lin(r.L)} + ${r.c} ≡ ${t[k]}</span><span class="panah">⇒</span><span class="ruas">${lin(r.L)} ≡ ${last.rhs[k]} (mod 7)</span></div>`).join('')}
+        </div>
+      </div>
+    </li>
+    <li>
+      <span class="sign-no">04</span>
+      <div class="sign-judul"><h3>Selesaikan sistem 2 × 2</h3><p>Karena det ≠ 0 di 𝔽₇, solusi untuk variabel oil tunggal dan langsung didapat.</p></div>
+      <div class="sign-isi">
+        <div class="matriks-2x2-baris">
+          <span class="kurung-mat"><span>${a}</span><span>${b}</span><span>${c}</span><span>${d}</span></span>
+          <span class="kurung-mat" style="grid-template-columns:auto"><span class="o-teks">u₅</span><span class="o-teks">u₆</span></span>
+          <span>≡</span>
+          <span class="kurung-mat" style="grid-template-columns:auto"><span>${last.rhs[0]}</span><span>${last.rhs[1]}</span></span>
+          <span class="det-pill">det = ${last.det} ≠ 0</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span style="font-family:var(--huruf-mono);font-size:13.5px;color:var(--redup)">(u₅, u₆) =</span> ${vektorTiles(sig.oil, 'o')}</div>
+      </div>
+    </li>
+    <li>
+      <span class="sign-no">05</span>
+      <div class="sign-judul"><h3>Gabungkan pra-bayangan u</h3><p>Empat nilai vinegar di kiri dan dua solusi oil di kanan memenuhi F(u) = t.</p></div>
+      <div class="sign-isi"><div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span style="font-family:var(--huruf-mono);font-size:13.5px;color:var(--redup)">u =</span> ${vektorTiles(sig.u, 'uo')}</div></div>
+    </li>
+    <li class="langkah-final">
+      <span class="sign-no">06</span>
+      <div class="sign-judul"><h3>Acak dengan T⁻¹</h3><p>Transformasi balik menyamarkan batas vinegar dan oil menjadi tanda tangan publik σ.</p></div>
+      <div class="sign-isi">
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+          <span style="font-family:var(--huruf-mono);font-size:14px;color:var(--redup)">σ = T⁻¹(u) =</span>
+          ${vektorTiles(sig.sigma, 'sig')}
+        </div>
+        <div style="margin-top:14px"><a class="tautan-halus" href="#eksperimen">Uji σ pada surat penerima di Bab I ↑</a></div>
+      </div>
+    </li>`;
+
+  $('recv').value = msg;
+  ukurTextarea($('recv'));
+  $('status-sinkron').textContent = 'Tersinkron dengan Bab I';
+  $('status-sinkron').classList.remove('berbeda');
+  $('sign-dari-hash').classList.remove('utama');
+  await doVerify();
+}
+
+// Diff horizontal gaya penyunting naskah (nol tumpang tindih!)
+function tampilkanKoreksi(asal, salinan) {
+  const asli = $('asli');
+  const berubah = asal !== salinan;
+  $('badge-asli').textContent = berubah ? 'Ada perubahan pada salinan' : 'Tersegel utuh';
+  $('badge-asli').className = 'lencana-diff' + (berubah ? ' berubah' : '');
+  $('badge-salinan').textContent = berubah ? 'Isi telah diubah' : 'Cocok dengan asli';
+  $('badge-salinan').className = 'lencana-diff' + (berubah ? ' berubah' : '');
+
+  if (!berubah) {
+    asli.textContent = asal;
+    return;
+  }
+  let awal = 0, akhir = 0;
+  const batas = Math.min(asal.length, salinan.length);
+  while (awal < batas && asal[awal] === salinan[awal]) awal++;
+  while (akhir < batas - awal && asal.at(-1 - akhir) === salinan.at(-1 - akhir)) akhir++;
+
+  const dihapus = asal.slice(awal, asal.length - akhir);
+  const ditambah = salinan.slice(awal, salinan.length - akhir);
+  const frag = document.createDocumentFragment();
+  frag.append(asal.slice(0, awal));
+  if (dihapus) {
+    const del = document.createElement('del');
+    del.textContent = dihapus;
+    frag.append(del);
+  }
+  if (ditambah) {
+    const ins = document.createElement('ins');
+    ins.textContent = ditambah === ' ' ? '␣' : ditambah;
+    frag.append(ins);
+  }
+  frag.append(asal.slice(asal.length - akhir));
+  asli.replaceChildren(frag);
+}
+
+async function doVerify() {
+  if (!sig) return;
+  const recv = $('recv').value;
+  const { t } = await hashToField(recv);
+  const tp = verify(keys.P, sig.sigma);
+  const ok = tp.join() === t.join();
+  if (recv !== $('recv').value) return;
+
+  const tpStr = `(${tp.join(', ')})`, trStr = `(${t.join(', ')})`;
+  const op = ok ? '=' : '≠';
+  const sama = recv === signed;
+
+  tampilkanKoreksi(signed, recv);
+  renderCincin(sig.sigma, ok);
+
+  // Perbarui seluruh titik telemetri (Hero, Jalur, Rel lengket, Bab I)
+  $('tp').textContent = tpStr;
+  $('tr').textContent = trStr;
+  $('relasi').textContent = op;
+  $('relasi').setAttribute('aria-label', ok ? 'sama dengan' : 'tidak sama dengan');
+  $('banding-besar').classList.toggle('sah', ok);
+
+  $('hero-tp').textContent = tpStr;
+  $('hero-tr').textContent = trStr;
+  $('hero-rel').textContent = op;
+  $('hero-lampu').classList.toggle('retak', !ok);
+  $('hero-status-teks').innerHTML = ok
+    ? 'Tersegel · <span class="math">t′ = t · P(σ) = Hash(M′)</span>'
+    : 'Segel retak · <span class="math">t′ ≠ t · P(σ) ≠ Hash(M′)</span>';
+
+  $('rel-tp').textContent = tpStr;
+  $('rel-tr').textContent = trStr;
+  $('rel-op').textContent = op;
+  $('rel-status').classList.toggle('retak', !ok);
+
+
+  // Hierarki tombol adaptif: tombol aksi paling relevan menjadi .utama
+  $('restore').disabled = sama;
+  $('restore').classList.toggle('utama', !sama);
+  $('tamper').classList.toggle('utama', sama);
+
+  const alasan = sama
+    ? `Kunci publik mengevaluasi P(σ) = ${tpStr}, tepat sama dengan hash salinan penerima. Tanda tangan sah.`
+    : ok
+      ? `Isi surat berubah, namun hash mainan 𝔽₇² kebetulan kembali menghasilkan ${trStr} (peluang benturan 1/49; pada GF(16)⁶⁴ praktis nol).`
+      : `Tanda tangan lama tetap menghasilkan P(σ) = ${tpStr}, sedangkan hash salinan berubah menjadi ${trStr}. Perbedaan ini menggagalkan verifikasi.`;
+
+  $('verdict').innerHTML = `
+    <div class="putusan-judul ${ok ? 'sah' : 'tolak'}">
+      <span class="ikon-status" aria-hidden="true">${ok ? '✓' : '✕'}</span>
+      <span>${ok ? 'Tanda tangan sah' : 'Tanda tangan ditolak'}</span>
+    </div>
+    <p class="putusan-alasan">${alasan}</p>`;
+}
+
+// Simulator brute-force langsung di Bab V (mencari σ* dengan P(σ*) = t tanpa F atau T)
+let sedangBobol = false;
+$('btn-bobol').onclick = async () => {
+  if (sedangBobol || !keys) return;
+  sedangBobol = true;
+  const btn = $('btn-bobol');
+  btn.disabled = true;
+  btn.textContent = 'Mencoba kandidat σ*…';
+  const { t } = await hashToField($('msg').value);
+  const t0 = performance.now();
+  let coba = 0, temu = null;
+  // Evaluasi bertahap (maks 2.500 percobaan, rata-rata ketemu dalam ~49 tebakan karena 49 target di F_7^2!)
+  const cand = [0, 0, 0, 0, 0, 0];
+  while (coba < 4000) {
+    coba++;
+    for (let i = 0; i < N; i++) cand[i] = randElem();
+    const out = verify(keys.P, cand);
+    if (out[0] === t[0] && out[1] === t[1]) { temu = [...cand]; break; }
+  }
+  const ms = Math.max(0.1, performance.now() - t0).toFixed(1).replace('.', ',');
+  if (temu) {
+    const beda = sig && temu.join() !== sig.sigma.join();
+    $('sim-hasil').innerHTML = `Berhasil dipalsukan dalam <strong>${coba} tebakan</strong> (${ms} ms): σ* = <strong>(${temu.join(', ')})</strong> memenuhi P(σ*) = (${t.join(', ')})${beda ? ', bahkan berbeda dari σ asli pengirim.' : '.'}`;
+  } else {
+    $('sim-hasil').textContent = `Belum ketemu dalam ${coba} tebakan; coba klik lagi.`;
+  }
+  btn.disabled = false;
+  btn.textContent = 'Coba bobol lagi';
+  sedangBobol = false;
+};
+
+// Event kontrol
+const acakSemua = async () => { keys = keygen(); renderKeys(); await doSign(); };
+$('regen').onclick = acakSemua;
+$('regen-hero').onclick = acakSemua;
+$('doSign').onclick = doSign;
+$('sign-dari-hash').onclick = async () => { await doSign(); $('eksperimen').scrollIntoView({ behavior: 'smooth' }); };
+
+$('msg').oninput = () => { ukurTextarea($('msg')); renderHash($('msg').value); };
+$('recv').oninput = () => { ukurTextarea($('recv')); doVerify(); };
+
+$('tamper').onclick = () => {
+  const s = $('recv').value;
+  const i = s.search(/\d/);
+  const k = i < 0 ? 0 : i;
+  $('recv').value = s.slice(0, k) + (i < 0 ? 'X' : String((+s[k] + 1) % 10)) + s.slice(k + 1);
+  ukurTextarea($('recv'));
+  doVerify();
+};
+$('restore').onclick = () => {
+  $('recv').value = signed;
+  ukurTextarea($('recv'));
+  doVerify();
+};
+
+document.querySelectorAll('[data-uji]').forEach(btn => {
+  btn.onclick = () => {
+    const jenis = btn.dataset.uji;
+    let target = signed;
+    if (jenis === 'nominal') target = signed.includes('Rp5') ? signed.replace('Rp5', 'Rp6') : signed.replace(/\d/, d => String((+d + 1) % 10));
+    if (jenis === 'nama') target = signed.includes('Alice') ? signed.replace('Alice', 'Bob') : 'Bob: ' + signed;
+    if (jenis === 'spasi') target = signed + ' ';
+    $('recv').value = target;
+    ukurTextarea($('recv'));
+    doVerify();
+  };
+});
+
+document.querySelectorAll('[data-eq]').forEach(btn => {
+  btn.onclick = () => {
+    eqIdx = Number(btn.dataset.eq);
+    document.querySelectorAll('[data-eq]').forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+    renderKeys();
+  };
+});
+
+document.querySelectorAll('[data-lensa]').forEach(btn => {
+  btn.onclick = () => {
+    const mode = btn.dataset.lensa;
+    $('lensa-bentang').dataset.mode = mode;
+    document.querySelectorAll('[data-lensa]').forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+  };
+});
+
+// Scrollspy & kemunculan bab yang selalu sinkron saat lompat jangkar
+const babIds = ['eksperimen', 'keygen', 'hash', 'sign', 'aman'];
+const navLinks = [...document.querySelectorAll('#nav-segmen a')];
+const revEls = [...document.querySelectorAll('.bab-reveal')];
+
+const bukaSemuaBab = () => revEls.forEach(el => el.classList.add('terlihat'));
+const tandaiNav = id => {
+  navLinks.forEach(a => {
+    const cocok = a.getAttribute('href') === '#' + id;
+    if (cocok) {
+      a.setAttribute('aria-current', 'location');
+      if (innerWidth <= 780) a.scrollIntoView({ inline: 'nearest', block: 'nearest' });
+    } else {
+      a.removeAttribute('aria-current');
+    }
+  });
+};
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', () => {
+    bukaSemuaBab();
+    const id = a.getAttribute('href').slice(1);
+    if (babIds.includes(id)) tandaiNav(id);
+  });
+});
+addEventListener('hashchange', bukaSemuaBab);
+
+const spy = new IntersectionObserver(entries => {
+  const aktif = entries.filter(e => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+  if (aktif) tandaiNav(aktif.target.id);
+}, { rootMargin: '-18% 0px -60% 0px', threshold: [0.02, 0.2, 0.45] });
+babIds.forEach(id => { const el = $(id); if (el) spy.observe(el); });
+
+// Animasi muncul bab (hormati prefers-reduced-motion; jangan pernah menyisakan bab buram)
+const diam = matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (diam || location.hash) {
+  bukaSemuaBab();
+} else {
+  const ro = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('terlihat'); ro.unobserve(e.target); }
+    });
+  }, { rootMargin: '0px 0px 120px 0px', threshold: 0.01 });
+  revEls.forEach(el => {
+    if (el.getBoundingClientRect().top < innerHeight * 1.1) el.classList.add('terlihat');
+    else ro.observe(el);
+  });
+}
+
+// Inisialisasi: buat kunci, tandatangani M, lalu demonstrasikan koreksi Rp5 -> Rp6
+keys = keygen();
+renderKeys();
+ukurTextarea($('msg'));
+await doSign();
+$('recv').value = signed.replace('Rp5', 'Rp6');
+ukurTextarea($('recv'));
+await doVerify();
+</script>
+</body>
+</html>
