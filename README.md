@@ -166,27 +166,21 @@ Variabel dibagi dua: x = (v, o), dengan v berisi 96 variabel vinegar dan o beris
 
    Blok oil × oil tidak ada sama sekali, jadi tidak perlu disimpan. Inilah struktur rahasia UOV:
 
-   $$
-   F_k(v, o) = v^{\top} Q_k\, v + v^{\top} B_k\, o
-   $$
+   $`F_k(v, o) = v^{\top} Q_k\, v + v^{\top} B_k\, o`$
 
 2. Pilih T, transformasi linear rahasia yang bisa dibalik. Di kode, T disimpan sebagai satu matriks A berukuran 96 × 64:
 
-   $$
-   T(v, o) = (v + A\,o,\; o)
-   $$
+   $`T(v, o) = (v + A\,o,\; o)`$
 
    Bentuk ini sama dengan matriks di slide:
 
-   $$
-   T = \begin{bmatrix} I & A \\ 0 & I \end{bmatrix}, \qquad T^{-1} = \begin{bmatrix} I & -A \\ 0 & I \end{bmatrix}
-   $$
+   $`T = \begin{bmatrix} I & A \\ 0 & I \end{bmatrix}, \qquad T^{-1} = \begin{bmatrix} I & -A \\ 0 & I \end{bmatrix}`$
 
    Di GF(16), $-A = A$, jadi $T^{-1} = T$, dan kode memakai rumus yang sama untuk keduanya.
-3. Bentuk $P = F \circ T$, yaitu $P(x) = F(T(x))$. Kode tidak mengalikan matriks besar secara langsung. Kode langsung menghitung tiga blok $P_k$ dengan mengganti $v$ dengan $v + A\,o$ di $F_k$:
+3. Bentuk $P = F \circ T$, yaitu $P(x) = F(T(x))$. Kode tidak mengalikan matriks besar secara langsung. Kode langsung menghitung tiga blok $P_k$ dengan mengganti $v$ dengan $v + A o$ di $F_k$:
    - blok vinegar × vinegar: $Q$
-   - blok vinegar × oil: $B + (Q + Q^{\top})\,A$ (variabel `D`)
-   - blok oil × oil: $A^{\top}(Q\,A + B)$ (variabel `E`), lalu "dilipat" ke segitiga atas: koefisien $x_a x_b$ untuk $a < b$ adalah $E_{ab} + E_{ba}$.
+   - blok vinegar × oil: $B + (Q + Q^{\top}) A$ (variabel `D`)
+   - blok oil × oil: $A^{\top}(Q A + B)$ (variabel `E`), lalu "dilipat" ke segitiga atas: koefisien $x_a x_b$ untuk $a < b$ adalah $E_{ab} + E_{ba}$.
 
    Hasilnya 64 matriks segitiga atas berukuran 160 × 160, masing-masing $160 \cdot 161 / 2 = 12880$ koefisien. Itulah kunci publik: $64 \cdot 12880 / 2 = 412160$ byte.
 
@@ -197,9 +191,9 @@ Variabel dibagi dua: x = (v, o), dengan v berisi 96 variabel vinegar dan o beris
 
 Fungsi: `target(message, salt)`.
 
-$$
+```math
 t = \text{SHA-256}(\text{domain} \,\Vert\, M \,\Vert\, \text{salt})
-$$
+```
 
 Hasil SHA-256 adalah 32 byte = 64 nibble (potongan 4 bit), dan tiap nibble adalah satu elemen GF(16). Jadi $t \in \mathrm{GF}(16)^{64}$, satu nilai untuk tiap persamaan.
 
@@ -214,24 +208,18 @@ Fungsi: `sign(message, secretKey)`.
 2. Pilih 96 nilai vinegar secara acak (`vin`).
 3. Masukkan vinegar ke F. Karena F tidak punya suku oil × oil, setiap persamaan menjadi linear terhadap oil:
 
-   $$
-   F_k(\mathrm{vin}, o) = c_k + \sum_{j} L_{kj}\, o_j
-   $$
+   $`\displaystyle F_k(\mathrm{vin}, o) = c_k + \sum_{j} L_{kj}\, o_j`$
 
-   dengan $c_k = \mathrm{vin}^{\top} Q_k\, \mathrm{vin}$ (konstanta) dan $L_{kj} = \sum_i (B_k)_{ij}\, \mathrm{vin}_i$. Persamaan yang harus dipenuhi menjadi
+   dengan $c_k = \mathrm{vin}^{\top} Q_k \mathrm{vin}$ (konstanta) dan $L_{kj} = \sum_i (B_k)_{ij} \mathrm{vin}_i$. Persamaan yang harus dipenuhi menjadi
 
-   $$
-   L\,o = t - c,
-   $$
+   $`L\,o = t - c,`$
 
    yaitu 64 persamaan linear dengan 64 variabel oil.
 4. Selesaikan dengan eliminasi Gauss-Jordan di GF(16) (fungsi `solve`). Kalau matriks L singular, kembali ke langkah 2 dengan vinegar baru. Kode mencoba paling banyak 256 kali. Dalam praktik biasanya langsung berhasil.
 5. Gabungkan u = (vin, o). Sekarang F(u) = t.
-6. Hitung $\sigma = T^{-1}(u)$. Karena $T^{-1} = T$, cukup tambahkan $A\,o$ ke bagian vinegar. Lalu
+6. Hitung $\sigma = T^{-1}(u)$. Karena $T^{-1} = T$, cukup tambahkan $A o$ ke bagian vinegar. Lalu
 
-   $$
-   P(\sigma) = F\big(T(T^{-1}(u))\big) = F(u) = t.
-   $$
+   $`P(\sigma) = F\big(T(T^{-1}(u))\big) = F(u) = t.`$
 
 7. Tanda tangan = σ (160 elemen = 80 byte) + salt (16 byte) = 96 byte.
 
@@ -245,9 +233,7 @@ Fungsi: `verify(message, signature, publicKey)`.
 2. Hitung t = Hash(M) dengan salt itu.
 3. Hitung $t' = P(\sigma)$, yaitu untuk tiap persamaan $k$:
 
-   $$
-   t'_k = \sum_{i \le j} (P_k)_{ij}\, \sigma_i\, \sigma_j
-   $$
+   $`\displaystyle t'_k = \sum_{i \le j} (P_k)_{ij}\, \sigma_i\, \sigma_j`$
 
 4. Tanda tangan sah jika $t' = t$ di ke-64 persamaan.
 
