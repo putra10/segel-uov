@@ -89,7 +89,7 @@ h1 em, h2 em { color: var(--aksen); }
 .kecil { font-size: 14px; color: var(--redup); }
 
 /* ---------- Kepala ---------- */
-.kepala { position: sticky; top: 0; z-index: 20; background: color-mix(in oklch, var(--latar) 58%, transparent); -webkit-backdrop-filter: blur(18px) saturate(1.6); backdrop-filter: blur(18px) saturate(1.6); border-bottom: 1px solid transparent; transition: border-color .2s; }
+.kepala { position: sticky; top: 0; z-index: 40; background: color-mix(in oklch, var(--latar) 58%, transparent); -webkit-backdrop-filter: blur(18px) saturate(1.6); backdrop-filter: blur(18px) saturate(1.6); border-bottom: 1px solid transparent; transition: border-color .2s; }
 .kepala.bergulir { border-bottom-color: var(--garis); }
 .kepala .wadah { display: flex; align-items: center; gap: 32px; height: 64px; }
 .logo { display: inline-flex; align-items: center; gap: 12px; font: 400 24px/1 var(--huruf-tampilan); text-decoration: none; }
@@ -309,12 +309,33 @@ ol.urut li::before { content: counter(u); font: 500 12px var(--huruf-mono); colo
   .mat { grid-template-columns: repeat(7, 26px); font-size: 12px; }
   .langkah, .hasil { padding: 16px; }
 }
-.menu-bawah { display: none; }
+.tombol-menu, .laci-menu, .laci-latar { display: none; }
 @media (max-width: 640px) {
-  .menu-bawah { display: flex; position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%); z-index: 30; gap: 2px; padding: 4px; border-radius: 999px; background: var(--permukaan); border: 1px solid var(--garis-kuat); box-shadow: var(--bayang-panggung); transition: opacity .35s var(--kurva), transform .35s var(--kurva); }
-  .menu-bawah.sembunyi { opacity: 0; transform: translate(-50%, calc(100% + 24px)); pointer-events: none; }
-  .menu-bawah a { font-size: 12px; padding: 8px 12px; white-space: nowrap; border-radius: 999px; text-decoration: none; color: var(--redup); }
-  .menu-bawah a[aria-current="page"] { background: var(--tinta); color: var(--latar); }
+  .kepala .wadah { gap: 10px; }
+  .tombol-menu { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; width: 38px; height: 36px; padding: 0; border: 1px solid var(--garis); border-radius: 999px; background: none; color: var(--tinta); cursor: pointer; flex: none; transition: border-color .25s var(--kurva), background-color .25s var(--kurva); }
+  .tombol-menu span { display: block; width: 16px; height: 1.5px; border-radius: 2px; background: currentColor; transition: transform .3s var(--kurva); }
+  .menu-buka .tombol-menu span:first-child { transform: translateY(3.25px) rotate(45deg); }
+  .menu-buka .tombol-menu span:last-child { transform: translateY(-3.25px) rotate(-45deg); }
+
+  .lak:not(.menu-buka) .kepala:not(.bergulir) .tombol-menu { border-color: oklch(98% 0.02 60 / .25); color: var(--krem); }
+  .menu-buka .kepala { background: color-mix(in oklch, var(--permukaan) 76%, transparent); border-bottom-color: color-mix(in oklch, var(--tinta) 10%, transparent); -webkit-backdrop-filter: blur(22px) saturate(1.7); backdrop-filter: blur(22px) saturate(1.7); }
+  .menu-buka .tombol-menu { border-color: color-mix(in oklch, var(--tinta) 18%, transparent); background: color-mix(in oklch, var(--tinta) 7%, transparent); }
+
+  .laci-latar { display: block; position: fixed; inset: 0; z-index: 30; background: oklch(10% 0.02 24 / .38); opacity: 0; pointer-events: none; transition: opacity .3s var(--kurva); }
+  .menu-buka .laci-latar { opacity: 1; pointer-events: auto; }
+
+  .laci-menu { display: block; position: fixed; top: 64px; left: 0; right: 0; z-index: 35; background: color-mix(in oklch, var(--permukaan) 76%, transparent); -webkit-backdrop-filter: blur(22px) saturate(1.7); backdrop-filter: blur(22px) saturate(1.7); border-bottom: 1px solid color-mix(in oklch, var(--tinta) 14%, transparent); border-radius: 0 0 24px 24px; box-shadow: var(--bayang-panggung), inset 0 -1px 0 oklch(100% 0 0 / .18); opacity: 0; transform: translateY(-12px); pointer-events: none; transition: opacity .3s var(--kurva), transform .3s var(--kurva); }
+  .menu-buka .laci-menu { opacity: 1; transform: none; pointer-events: auto; }
+  .laci-menu .wadah { padding: 8px 0 20px; }
+  .laci-menu a { display: grid; grid-template-columns: 32px 1fr auto; align-items: center; gap: 12px; min-height: 56px; padding: 12px 4px; border-bottom: 1px solid color-mix(in oklch, var(--tinta) 10%, transparent); text-decoration: none; color: var(--tinta); transition: color .2s; }
+  .laci-menu a:last-of-type { border-bottom: 0; }
+  .laci-menu .no { font: 500 12px var(--huruf-mono); color: var(--samar); }
+  .laci-menu .label { font: 400 28px/1.1 var(--huruf-tampilan); letter-spacing: -.01em; }
+  .laci-menu .panah { font: 400 15px var(--huruf-isi); color: var(--samar); }
+  .laci-menu a[aria-current="page"] .label { color: var(--aksen); font-style: italic; }
+  .laci-menu a[aria-current="page"] .no, .laci-menu a[aria-current="page"] .panah { color: var(--aksen); }
+  .laci-menu a[aria-current="page"] .panah { font-size: 9px; }
+  .laci-kaki { margin: 12px 4px 0; font: 500 11px var(--huruf-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--samar); }
 }
 
 /* ==========================================================================
@@ -385,15 +406,16 @@ body:not(.beranda) .hero-latar {
 .kartu-bukti span:not(.ikon-dok) { color: oklch(45% 0.04 30); font: 12px var(--huruf-mono); }
 
 /* Nav melayang di atas hero beranda; kembali normal setelah digulir. */
-.lak .kepala { position: fixed; left: 0; right: 0; background: transparent; backdrop-filter: none; transition: background .25s, border-color .25s; }
+.lak .kepala { position: fixed; left: 0; right: 0; transition: background .25s, border-color .25s; }
+.lak:not(.menu-buka) .kepala:not(.bergulir) { background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
 /* Kaca buram setelah keluar dari hero: isi halaman tetap samar terlihat di baliknya. */
-.lak .kepala.bergulir { background: color-mix(in oklch, var(--latar) 58%, transparent); -webkit-backdrop-filter: blur(18px) saturate(1.6); backdrop-filter: blur(18px) saturate(1.6); }
-.lak .kepala:not(.bergulir) .logo, .lak .kepala:not(.bergulir) .menu a { color: var(--krem); }
-.lak .kepala:not(.bergulir) .logo span { color: oklch(86% 0.07 55); }
-.lak .kepala:not(.bergulir) .menu a:hover { background: oklch(98% 0.02 60 / .1); }
-.lak .kepala:not(.bergulir) .tema { border-color: oklch(98% 0.02 60 / .25); }
-.lak .kepala:not(.bergulir) .tema button { color: var(--krem-samar); }
-.lak .kepala:not(.bergulir) .tema button[aria-pressed="true"] { background: oklch(98% 0.02 60 / .14); color: var(--krem); }
+.lak:not(.menu-buka) .kepala.bergulir { background: color-mix(in oklch, var(--latar) 58%, transparent); -webkit-backdrop-filter: blur(18px) saturate(1.6); backdrop-filter: blur(18px) saturate(1.6); }
+.lak:not(.menu-buka) .kepala:not(.bergulir) .logo, .lak:not(.menu-buka) .kepala:not(.bergulir) .menu a { color: var(--krem); }
+.lak:not(.menu-buka) .kepala:not(.bergulir) .logo span { color: oklch(86% 0.07 55); }
+.lak:not(.menu-buka) .kepala:not(.bergulir) .menu a:hover { background: oklch(98% 0.02 60 / .1); }
+.lak:not(.menu-buka) .kepala:not(.bergulir) .tema { border-color: oklch(98% 0.02 60 / .25); }
+.lak:not(.menu-buka) .kepala:not(.bergulir) .tema button { color: var(--krem-samar); }
+.lak:not(.menu-buka) .kepala:not(.bergulir) .tema button[aria-pressed="true"] { background: oklch(98% 0.02 60 / .14); color: var(--krem); }
 
 /* ---------- Bagian di bawah hero ----------
    Pelajaran tata letak dari Cloudflare dan Codex: judul di tengah, isi dalam kisi garis tipis
@@ -554,7 +576,7 @@ h1, h2, h3, h4, .kaki .slogan, .rumus-besar { text-wrap: balance; }
 p, li, dd, .pengantar { text-wrap: pretty; }
 
 /* Semua transisi memakai satu kurva yang melambat, minimal 300 ms. */
-.tombol, .menu a, .menu-bawah a, .jatuh, .coba-baris, .tema button, .kaki a, details summary { transition-property: background-color, border-color, color, transform, opacity; transition-duration: .3s; transition-timing-function: var(--kurva); }
+.tombol, .menu a, .jatuh, .coba-baris, .tema button, .kaki a, details summary { transition-property: background-color, border-color, color, transform, opacity; transition-duration: .3s; transition-timing-function: var(--kurva); }
 .lak .kepala { transition: background-color .3s var(--kurva), border-color .3s var(--kurva); }
 .tombol:active { transform: scale(.98); }
 
@@ -588,7 +610,7 @@ p, li, dd, .pengantar { text-wrap: pretty; }
   .akan-muncul { opacity: 1; transform: none; transition: none; }
   .slogan-besar .kata { transition: none; }
   .memuat::before { animation: none; }
-  .menu-bawah { transition: none; }
+  .tombol-menu span, .laci-menu, .laci-latar { transition: none; }
 }
 
 /* Kontras AA: placeholder, angka nol dan judul kolom matriks. */

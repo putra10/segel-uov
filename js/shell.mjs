@@ -39,15 +39,26 @@ export function pasangShell() {
     const { pathname } = new URL(rute, BERANDA);
     return `<a href="${pathname}"${kini === pathname ? ' aria-current="page"' : ''}>${nama}</a>`;
   };
+  const semuaItem = [['', 'Beranda'], ...TAUTAN];
   const menu = TAUTAN.map(tautan).join('');
-  const semua = tautan(['', 'Beranda']) + menu;
+  const semua = semuaItem.map(tautan).join('');
+  const laciTautan = semuaItem.map(([rute, nama], i) => {
+    const { pathname } = new URL(rute, BERANDA);
+    const aktif = kini === pathname;
+    return `<a href="${pathname}"${aktif ? ' aria-current="page"' : ''}><span class="no">0${i + 1}</span><span class="label">${nama}</span><span class="panah" aria-hidden="true">${aktif ? '●' : '→'}</span></a>`;
+  }).join('');
   document.body.insertAdjacentHTML('afterbegin', `
     <header class="kepala"><div class="wadah">
       <a href="${BERANDA.pathname}" class="logo" aria-label="${NAMA}, ke beranda">${LOGO}${NAMA}<span>UOV</span></a>
       <nav class="menu" aria-label="Menu utama">${menu}</nav>
       <div class="tema" role="group" aria-label="Tema"><button data-tema="terang" aria-label="Tema terang">${ikonTerang}</button><button data-tema="gelap" aria-label="Tema gelap">${ikonGelap}</button></div>
+      <button class="tombol-menu" type="button" aria-label="Buka menu" aria-expanded="false" aria-controls="laci-menu"><span></span><span></span></button>
     </div></header>
-    <nav class="menu-bawah" aria-label="Menu">${semua}</nav>`);
+    <div class="laci-latar" aria-hidden="true"></div>
+    <nav class="laci-menu" id="laci-menu" aria-label="Menu" inert><div class="wadah">
+      ${laciTautan}
+      <p class="laci-kaki">Pemodelan Matematika · Kelompok 3B</p>
+    </div></nav>`);
   document.body.insertAdjacentHTML('beforeend', `
     <footer class="kaki"><div class="wadah">
       <div class="kaki-atas">
@@ -113,14 +124,21 @@ export function pasangShell() {
   addEventListener('gesturestart', e => e.preventDefault());
   addEventListener('wheel', e => { if (e.ctrlKey) e.preventDefault(); }, { passive: false });
   addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && ['+', '-', '=', '0'].includes(e.key)) e.preventDefault(); });
-  // Di ponsel, sembunyikan menu melayang bawah saat kaki halaman masuk layar (kaki sudah memuat navigasi).
-  const menuBawah = document.querySelector('.menu-bawah'), kaki = document.querySelector('.kaki');
-  if (menuBawah && kaki) {
-    new IntersectionObserver(([e]) => {
-      const sembunyi = e.isIntersecting;
-      menuBawah.classList.toggle('sembunyi', sembunyi);
-      menuBawah.inert = sembunyi;
-    }, { rootMargin: '0px 0px -12px 0px', threshold: 0 }).observe(kaki);
+  // Drawer menu ponsel: buka/tutup dari tombol kepala, latar redup, atau tombol Escape.
+  const tombolMenu = document.querySelector('.tombol-menu');
+  const laciMenu = document.querySelector('.laci-menu');
+  const laciLatar = document.querySelector('.laci-latar');
+  if (tombolMenu && laciMenu && laciLatar) {
+    const aturMenu = buka => {
+      document.body.classList.toggle('menu-buka', buka);
+      tombolMenu.setAttribute('aria-expanded', String(buka));
+      tombolMenu.setAttribute('aria-label', buka ? 'Tutup menu' : 'Buka menu');
+      laciMenu.inert = !buka;
+    };
+    tombolMenu.onclick = () => aturMenu(!document.body.classList.contains('menu-buka'));
+    laciLatar.onclick = () => aturMenu(false);
+    addEventListener('keydown', e => { if (e.key === 'Escape' && document.body.classList.contains('menu-buka')) { aturMenu(false); tombolMenu.focus(); } });
+    matchMedia('(min-width: 641px)').addEventListener('change', e => { if (e.matches) aturMenu(false); });
   }
 }
 
