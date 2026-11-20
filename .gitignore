@@ -1,0 +1,5 @@
+.claude/
+_uji/
+node_modules/
+*.segel
+__pycache__/

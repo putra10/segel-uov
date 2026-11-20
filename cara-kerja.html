@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cara kerja · Segel</title>
+<script>try{var t=localStorage.getItem('segel-tema');if(t==='gelap'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.classList.add('gelap')}catch(e){}</script>
+<meta name="description" content="Skema Unbalanced Oil and Vinegar dengan parameter kecil di F7, supaya setiap angka bisa diikuti dari KeyGen sampai Verify.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Segel">
+<meta property="og:title" content="Cara kerja UOV · Segel">
+<meta property="og:description" content="Skema Unbalanced Oil and Vinegar dengan parameter kecil di F7, supaya setiap angka bisa diikuti dari KeyGen sampai Verify.">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#7a2620">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/segel.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23a3302c'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%23fff' stroke-width='2.4'/%3E%3C/svg%3E">
+</head>
+<body class="lak">
+<section class="hero hero-kecil">
+  <div class="hero-latar" aria-hidden="true"></div>
+  <div class="wadah">
+    <span class="alis">Cara kerja · contoh dengan angka kecil</span>
+    <h1>Tanda tangan sebagai <em>solusi persamaan.</em></h1>
+    <p class="pengantar">Halaman Tanda tangani memakai 160 variabel atas GF(16). Di sini skemanya sama, tetapi parameternya kecil supaya setiap angka bisa diikuti. Ubah pesannya, tanda tangani, lalu lihat kapan verifikasi menolak.</p>
+    <div class="baris-tombol" style="margin-top:24px">
+      <span class="chip">q = 7 (𝔽₇)</span><span class="chip">n = 6 variabel</span>
+      <span class="chip v">v = 4 vinegar</span><span class="chip o">o = m = 2 oil</span>
+    </div>
+  </div>
+</section>
+<main class="wadah">
+
+  <section class="langkah-demo" id="keygen">
+    <div class="sisi"><h2>KeyGen</h2><p>Kunci rahasia adalah pasangan (F, T). Kunci publik adalah komposisinya, P = F ∘ T.</p>
+      <div class="baris-tombol" style="margin-top:16px"><button class="tombol kecil" id="regen">Acak kunci baru</button></div></div>
+    <div>
+      <p class="rumus">sk = (F, T) &nbsp;→&nbsp; pk = P = F ∘ T</p>
+      <div class="kisi-2">
+        <div class="panel"><h3>F₁ · pemetaan oil dan vinegar <span class="tag">rahasia</span></h3><div id="matF"></div>
+          <p class="catatan">Blok bergaris adalah <b>oil × oil</b>, selalu 0.</p></div>
+        <div class="panel"><h3>P₁ = F₁ ∘ T <span class="tag">publik</span></h3><div id="matP"></div>
+          <p class="catatan">Setelah dicampur T, struktur oil dan vinegar tidak terlihat lagi.</p></div>
+      </div>
+      <details class="panel"><summary>Lihat dalam bentuk polinomial</summary>
+        <div class="poli" id="polyF"></div><div class="poli" id="polyP" style="margin-top:12px"></div>
+        <p class="catatan" id="ooNote"></p></details>
+      <details class="panel"><summary>T · transformasi linear invertibel (rahasia)</summary>
+        <div id="matT"></div><p class="catatan">T = [[I, A], [0, I]], jadi T⁻¹ = [[I, −A], [0, I]].</p></details>
+    </div>
+  </section>
+
+  <section class="langkah-demo" id="hash">
+    <div class="sisi"><h2>Hash</h2><p>Dokumen sepanjang apa pun diringkas menjadi target t, vektor di 𝔽₇².</p></div>
+    <div>
+      <p class="rumus">H : {0,1}* → 𝔽₇² , &nbsp;t = H(M)</p>
+      <div class="panel"><h3>Dokumen M</h3>
+        <textarea id="msg" rows="3">Surat Keputusan No. 12/2026: beasiswa a.n. Alice disetujui sebesar Rp5.000.000.</textarea>
+        <dl class="data" style="margin-top:16px"><dt>SHA-256</dt><dd class="hash" id="hex"></dd><dt>t = H(M)</dt><dd class="vek" id="t"></dd></dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="langkah-demo" id="sign">
+    <div class="sisi"><h2>Sign</h2><p>Pilih vinegar acak. Karena tidak ada suku oil × oil, persamaannya menjadi linear terhadap oil.</p>
+      <div class="baris-tombol" style="margin-top:16px"><button class="tombol utama kecil" id="doSign">Tanda tangani M</button></div></div>
+    <div>
+      <p class="rumus">cari u dengan F(u) = t , &nbsp;lalu σ = T⁻¹(u)</p>
+      <div class="panel"><ol class="urut" id="signFlow"></ol></div>
+    </div>
+  </section>
+
+  <section class="langkah-demo" id="verify">
+    <div class="sisi"><h2>Verify</h2><p>Penerima hanya memakai kunci publik P. Tidak perlu F, T, atau bantuan penanda tangan.</p></div>
+    <div>
+      <p class="rumus">terima ⇔ P(σ) = H(M′)</p>
+      <div class="panel"><h3>Dokumen yang diterima M′</h3>
+        <textarea id="recv" rows="3"></textarea>
+        <div class="baris-tombol" style="margin-top:12px"><button class="tombol kecil" id="tamper">Ubah satu karakter</button><button class="tombol polos kecil" id="restore">Kembalikan ke asli</button></div></div>
+      <div class="panel">
+        <div class="banding"><div class="kotak"><div class="lbl">t′ = P(σ)</div><div class="nilai" id="tp"></div></div><div class="op" id="op">=</div><div class="kotak"><div class="lbl">t = H(M′)</div><div class="nilai" id="tr"></div></div></div>
+        <div class="putusan" id="verdict"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="langkah-demo" id="aman">
+    <div class="sisi"><h2>Keamanan</h2><p>Keamanan UOV diyakini bertumpu pada sulitnya mendapatkan F dan T jika yang diketahui hanya P.</p></div>
+    <div>
+      <div class="kisi-2">
+        <div class="panel"><h3>Yang dilihat penyerang</h3><p class="catatan" style="margin:0 0 12px">P, M, dan σ. Semuanya publik. Penyerang tidak tahu variabel mana yang oil.</p><details><summary class="kecil" style="cursor:pointer">Tampilkan P₁ dan P₂</summary><div class="poli" id="atkP" style="margin-top:12px"></div></details></div>
+        <div class="panel"><h3>Yang tetap rahasia</h3><div class="poli rahasia" id="atkF" style="max-height:120px;overflow:hidden"></div><p class="catatan">F dan T. Tanpa ini, mencari σ berarti menyelesaikan sistem kuadratik multivariat (masalah MQ).</p></div>
+      </div>
+      <div class="kisi-2" style="margin-top:16px">
+        <div class="panel"><div class="stat">7⁶ = 117.649<small>kemungkinan σ pada contoh mainan: kecil, bisa dicoba satu per satu</small></div></div>
+        <div class="panel"><div class="stat">16¹⁶⁰ ≈ 10¹⁹²<small>pada parameter yang dipakai Segel (q = 16, n = 160, m = 64)</small></div></div>
+      </div>
+      <div class="baris-tombol" style="margin-top:24px"><a class="tombol utama" href="tandatangani.html">Coba dengan parameter nyata →</a></div>
+    </div>
+  </section>
+</main>
+
+<script type="module">
+import { pasangShell } from './js/shell.mjs';
+import { V, N, keygen, sign, verify, hashToField, isOil } from './js/uov-toy.mjs';
+pasangShell();
+const $ = id => document.getElementById(id);
+const SUB = '₀₁₂₃₄₅₆₇₈₉', sub = n => String(n).split('').map(d => SUB[d]).join('');
+const cls = i => isOil(i) ? 'o' : 'v';
+const vecHTML = (x, warna) => '(' + x.map((a, i) => `<span class="${warna ? cls(i) : ''}">${a}</span>`).join(', ') + ')';
+let keys, signed, sig;
+
+function matHTML(U, { oil = true, full = false } = {}) {
+  let h = '<div class="mat"><span></span>';
+  for (let j = 0; j < N; j++) h += `<span class="hd ${cls(j)}">x${sub(j + 1)}</span>`;
+  for (let i = 0; i < N; i++) {
+    h += `<span class="hd ${cls(i)}">x${sub(i + 1)}</span>`;
+    for (let j = 0; j < N; j++) {
+      const a = U[i][j];
+      if (!full && j < i) { h += '<span class="lo">·</span>'; continue; }
+      const c = oil && isOil(i) && isOil(j) ? 'oo' : oil && isOil(i) !== isOil(j) ? 'vo' : '';
+      h += `<span class="${c} ${a ? '' : 'z'}">${a}</span>`;
+    }
+  }
+  return h + '</div>';
+}
+// warna=false: tampilan penyerang, yang tidak tahu mana oil dan mana vinegar.
+function polyHTML(U, name, v, warna = true) {
+  const terms = [];
+  for (let i = 0; i < N; i++) for (let j = i; j < N; j++) {
+    const a = U[i][j]; if (!a) continue;
+    const x = k => `<span class="${warna ? cls(k) : ''}">${v}${sub(k + 1)}</span>`;
+    const oo = warna && isOil(i) && isOil(j);
+    terms.push(`<span class="${oo ? 't-oo' : ''}">${a === 1 ? '' : a}${i === j ? x(i) + '²' : x(i) + x(j)}</span>`);
+  }
+  return `${name}(${v}) = ${terms.join(' + ')}`;
+}
+const countOO = U => { let c = 0; for (let i = V; i < N; i++) for (let j = i; j < N; j++) if (U[i][j]) c++; return c; };
+
+function renderKeys() {
+  $('matF').innerHTML = matHTML(keys.F[0]);
+  $('matP').innerHTML = matHTML(keys.P[0], { oil: false });
+  $('matT').innerHTML = matHTML(keys.T, { oil: false, full: true });
+  $('polyF').innerHTML = polyHTML(keys.F[0], 'F₁', 'u');
+  $('polyP').innerHTML = polyHTML(keys.P[0], 'P₁', 'x');
+  $('ooNote').innerHTML = `F₁ memuat <b>0</b> suku oil × oil. P₁ memuat <b>${countOO(keys.P[0])}</b> suku oil × oil (disorot), sehingga dari luar tidak tampak mana yang oil.`;
+  $('atkP').innerHTML = keys.P.map((U, k) => polyHTML(U, 'P' + sub(k + 1), 'x', false)).join('<br>');
+  $('atkF').innerHTML = keys.F.map((U, k) => polyHTML(U, 'F' + sub(k + 1), 'u')).join('<br>');
+}
+
+async function doSign() {
+  const msg = $('msg').value, { t } = await hashToField(msg);
+  sig = sign(keys, t); signed = msg;
+  const last = sig.attempts.at(-1), u = i => `<span class="o">u${sub(V + i + 1)}</span>`;
+  const lin = L => L.map((a, i) => a ? (a === 1 ? '' : a) + u(i) : '').filter(Boolean).join(' + ') || '0';
+  const retries = sig.attempts.slice(0, -1).map((a, k) => `<div class="ulang">Percobaan ${k + 1}: vinegar ${vecHTML(a.vin)} memberi det = 0, sistem tidak punya solusi tunggal. Pilih ulang.</div>`).join('');
+  $('signFlow').innerHTML = `
+    <li><div>Target dari langkah 02: <span class="vek">t = ${vecHTML(t)}</span></div></li>
+    <li><div>${retries}Pilih vinegar acak: <span class="vek">(u₁, u₂, u₃, u₄) = <span class="v">${vecHTML(sig.vin)}</span></span></div></li>
+    <li><div>Substitusi ke F₁ dan F₂. Suku vinegar × vinegar menjadi konstanta, suku vinegar × oil menjadi koefisien oil:
+      <div class="pers">${last.rows.map((r, k) => `F${sub(k + 1)}: ${lin(r.L)} + ${r.c} = ${t[k]} &nbsp;⇒&nbsp; ${lin(r.L)} = ${last.rhs[k]}`).join('<br>')}</div></div></li>
+    <li><div>Sistem linear 2 × 2 atas 𝔽₇, determinan ${last.det} ≠ 0. Solusinya <span class="vek">(${u(0)}, ${u(1)}) = <span class="o">${vecHTML(sig.oil)}</span></span></div></li>
+    <li><div>Gabungkan: <span class="vek">u = ${vecHTML(sig.u, true)}</span>, dan memang F(u) = t.</div></li>
+    <li><div>Sembunyikan strukturnya dengan T⁻¹: <span class="vek" style="font-size:18px">σ = T⁻¹(u) = ${vecHTML(sig.sigma)}</span></div></li>`;
+  $('recv').value = msg;
+  await doVerify();
+}
+
+async function doVerify() {
+  if (!sig) return;
+  const recv = $('recv').value, { t } = await hashToField(recv), tp = verify(keys.P, sig.sigma), ok = tp.join() === t.join();
+  $('tp').textContent = '(' + tp.join(', ') + ')';
+  $('tr').textContent = '(' + t.join(', ') + ')';
+  $('op').textContent = ok ? '=' : '≠';
+  $('verdict').className = 'putusan ' + (ok ? 'sah' : 'tolak');
+  $('verdict').innerHTML = ok
+    ? `<div class="besar">Valid</div><div class="alasan">${recv !== signed ? 'Dokumen berubah tetapi hash-nya kebetulan sama (peluang 1/49 pada 𝔽₇²; pada parameter nyata praktis nol).' : 'Dokumen sama dengan yang ditandatangani, dan σ cocok dengan kunci publik P.'}</div>`
+    : `<div class="besar">Tidak valid</div><div class="alasan">Isi dokumen berubah, sehingga H(M′) tidak lagi sama dengan P(σ). Tanda tangan lama tidak berlaku untuk isi baru.</div>`;
+}
+
+$('regen').onclick = async () => { keys = keygen(); renderKeys(); await doSign(); };
+$('doSign').onclick = doSign;
+$('msg').oninput = async () => { const { hex, t } = await hashToField($('msg').value); $('hex').textContent = hex; $('t').innerHTML = vecHTML(t); };
+$('recv').oninput = doVerify;
+$('tamper').onclick = () => { const s = $('recv').value, i = s.search(/\d/), k = i < 0 ? 0 : i; $('recv').value = s.slice(0, k) + (i < 0 ? 'X' : String((+s[k] + 1) % 10)) + s.slice(k + 1); doVerify(); };
+$('restore').onclick = () => { $('recv').value = signed; doVerify(); };
+
+keys = keygen(); renderKeys(); $('msg').oninput(); await doSign();
+</script>
+</body>
+</html>
