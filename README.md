@@ -2,7 +2,7 @@
 
 [![Ask ChatGPT](https://img.shields.io/badge/Ask-ChatGPT-10a37f)](https://chatgpt.com/?q=Jelaskan%20repositori%20GitHub%20https%3A%2F%2Fgithub.com%2Fputra10%2Fsegel-uov%20dan%20cara%20kerja%20UOV%20di%20dalamnya)
 [![Ask Claude](https://img.shields.io/badge/Ask-Claude-d97757)](https://claude.ai/new?q=Jelaskan%20repositori%20GitHub%20https%3A%2F%2Fgithub.com%2Fputra10%2Fsegel-uov%20dan%20cara%20kerja%20UOV%20di%20dalamnya)
-[![Ask Gemini](https://img.shields.io/badge/Ask-Gemini-4285F4)](https://gemini.google.com/app)
+[![Ask Gemini](https://img.shields.io/badge/Ask-Gemini-4285F4)](https://gemini.google.com/new?q=Jelaskan%20repositori%20GitHub%20https%3A%2F%2Fgithub.com%2Fputra10%2Fsegel-uov%20dan%20cara%20kerja%20UOV%20di%20dalamnya)
 
 Situs untuk menandatangani dan memeriksa dokumen dengan skema tanda tangan UOV (Unbalanced Oil and Vinegar).
 Proyek Pemodelan Matematika, Kelompok 3B, Departemen Matematika FMIPA UI, 2026.
